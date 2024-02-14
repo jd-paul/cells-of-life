@@ -17,6 +17,10 @@ public class Simulator {
     private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
     private static final double BOZIUM_ALIVE_PROB = 0.15;
     private static final double YERSINIA_ALIVE_PROB = 0.10;
+    
+    private Color mycoColor = Color.rgb(255, 165, 0);
+    private Color bozColor = Color.rgb(100, 55, 0);
+    private Color yerColor = Color.rgb(220, 20, 60);
 
     private List<Cell> cells;
     private Field field;
@@ -71,27 +75,23 @@ public class Simulator {
     private void populate() {
         Random rand = Randomizer.getRandom();
         field.clear();
-
-        Color mycoColor = Color.rgb(255, 165, 0);
-        Color bozColor = Color.rgb(100, 55, 0);
-
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
-                Bozium boz = new Bozium(field, location, bozColor);
-
                 int n = rand.nextInt(3);
+                Location location = new Location(row, col);
+                
                 if (n == 0) {
+                    Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                     if (rand.nextDouble() <= MYCOPLASMA_ALIVE_PROB) {
                         cells.add(myco);
                     }
                     else {
                         myco.setDead();
                         cells.add(myco);
+    
                     }
-                }
-                else if (n == 1) {
+                } else if (n == 1) {
+                    Bozium boz = new Bozium(field, location, bozColor);
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
                         cells.add(boz);
                     }
@@ -99,9 +99,15 @@ public class Simulator {
                         boz.setDead();
                         cells.add(boz);
                     }
-                }
-                else if (n == 2) {
-                    
+                } else if (n == 2) {
+                    Yersinia yer = new Yersinia(field, location, yerColor);
+                    if (rand.nextDouble() <= YERSINIA_ALIVE_PROB) {
+                        cells.add(yer);
+                    }
+                    else {
+                        yer.setDead();
+                        cells.add(yer);
+                    }
                 }
             }
         }

@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.target=Simulator
+comment0.text=\n\ A\ Life\ (Game\ of\ Life)\ simulator,\ first\ described\ by\ British\ mathematician\n\ John\ Horton\ Conway\ in\ 1970.\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2024.02.03\n
+comment1.params=
+comment1.target=Simulator()
+comment1.text=\n\ Construct\ a\ simulation\ field\ with\ default\ size.\n
+comment2.params=depth\ width
+comment2.target=Simulator(int,\ int)
+comment2.text=\n\ Create\ a\ simulation\ field\ with\ the\ given\ size.\n\ @param\ depth\ Depth\ of\ the\ field.\ Must\ be\ greater\ than\ zero.\n\ @param\ width\ Width\ of\ the\ field.\ Must\ be\ greater\ than\ zero.\n
+comment3.params=
+comment3.target=void\ simOneGeneration()
+comment3.text=\n\ Run\ the\ simulation\ from\ its\ current\ state\ for\ a\ single\ generation.\n\ Iterate\ over\ the\ whole\ field\ updating\ the\ state\ of\ each\ life\ form.\n
+comment4.params=
+comment4.target=void\ reset()
+comment4.text=\n\ Reset\ the\ simulation\ to\ a\ starting\ position.\n
+comment5.params=
+comment5.target=void\ populate()
+comment5.text=\n\ Randomly\ populate\ the\ field\ live/dead\ life\ forms\n
+comment6.params=millisec
+comment6.target=void\ delay(int)
+comment6.text=\n\ Pause\ for\ a\ given\ time.\n\ @param\ millisec\ \ The\ time\ to\ pause\ for,\ in\ milliseconds\n
+comment7.params=
+comment7.target=Field\ getField()
+comment8.params=
+comment8.target=int\ getGeneration()
+numComments=9
