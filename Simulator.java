@@ -14,9 +14,9 @@ import java.util.Random;
 
 public class Simulator {
 
-    private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
-    private static final double BOZIUM_ALIVE_PROB = 0.15;
-    private static final double YERSINIA_ALIVE_PROB = 0.10;
+    private static final double MYCOPLASMA_ALIVE_PROB = 0.25;
+    private static final double BOZIUM_ALIVE_PROB = 0.25;
+    private static final double YERSINIA_ALIVE_PROB = 0.25;
     
     private Color mycoColor = Color.rgb(255, 165, 0);
     private Color bozColor = Color.rgb(100, 55, 0);

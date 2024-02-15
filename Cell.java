@@ -1,4 +1,6 @@
 import javafx.scene.paint.Color;
+import java.util.Random;
+import java.util.List;
 
 /**
  * A class representing the shared characteristics of all forms of life
@@ -8,13 +10,13 @@ import javafx.scene.paint.Color;
  */
 
 public abstract class Cell {
-
+    private boolean disease; 
     private boolean alive;    
     private boolean nextAlive; // The state of the cell in the next iteration
     private Field field;
     private Location location;
     private Color color = Color.WHITE;
-
+    Random rand = new Random();
     /**
      * Create a new cell at location in field.
      *
@@ -23,6 +25,7 @@ public abstract class Cell {
      */
     public Cell(Field field, Location location, Color col) {
         alive = true;
+        disease = false;
         nextAlive = false;
         this.field = field;
         setLocation(location);
@@ -55,6 +58,8 @@ public abstract class Cell {
      */
     public void setNextState(boolean value) {
         nextAlive = value;
+        //after die reset back to normal state(without disease)
+        setDiseaseState(value);
     }
 
     /**
@@ -101,5 +106,21 @@ public abstract class Cell {
      */
     protected Field getField() {
         return field;
+    }
+    
+    protected void randomDie(){
+        // Generate a random number between 0 (inclusive) and 10 (exclusive)
+        int randomNumber = rand.nextInt(10);
+
+        // Check if the random number is 0 (1/10 chance) to die 
+        if (randomNumber == 0) {
+            setNextState(false);
+        }
+    }
+    public void setDiseaseState(boolean value) {
+        disease = value;
+    }
+    public boolean getDiseaseState() {
+        return disease;
     }
 }
