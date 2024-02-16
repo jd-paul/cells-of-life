@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public abstract class Cell {
-    private boolean disease; 
+    private boolean hasDisease; 
     private boolean alive;    
     private boolean nextAlive; // The state of the cell in the next iteration
     private Field field;
@@ -25,7 +25,7 @@ public abstract class Cell {
      */
     public Cell(Field field, Location location, Color col) {
         alive = true;
-        disease = false;
+        hasDisease = false;
         nextAlive = false;
         this.field = field;
         setLocation(location);
@@ -118,9 +118,9 @@ public abstract class Cell {
         }
     }
     public void setDiseaseState(boolean value) {
-        disease = value;
+        hasDisease = value;
     }
     public boolean getDiseaseState() {
-        return disease;
+        return hasDisease;
     }
 }

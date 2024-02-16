@@ -7,12 +7,11 @@ import java.util.List;
  * bacteria, they only have 500-1000 genes! For comparison, fruit flies have
  * about 14,000 genes.
  *
- * @author David J. Barnes, Michael Kölling & Jeffery Raphael hi
+ * @author David J. Barnes, Michael Kölling & Jeffery Raphael
  * @version 2022.01.06
  */
 
 public class Mycoplasma extends Cell {
-
     /**
      * Create a new Mycoplasma.
      *
@@ -29,16 +28,16 @@ public class Mycoplasma extends Cell {
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-<<<<<<< HEAD
         
-=======
->>>>>>> 7a7ea9c78e4392e6b139917edcef105a30004328
+        System.out.println("Acting");
+        System.out.println(neighbours);
+        
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
                 if(getDiseaseState()){
                     randomDie();
-                } 
+                }
             }
             else {
                 setNextState(false);

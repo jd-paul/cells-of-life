@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Yersinia extends Cell
 {
+    private Color yerColor = Color.rgb(220, 20, 60);
+    
     /**
      * Create a new Mycoplasma.
      *
@@ -32,6 +34,10 @@ public class Yersinia extends Cell
     */
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
+        for(Cell cell: neighbours) {
+            cell.setColor(yerColor);
+        }
+        
         setNextState(false);
         
         System.out.println(neighbours);
