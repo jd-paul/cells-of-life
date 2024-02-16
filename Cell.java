@@ -59,7 +59,6 @@ public abstract class Cell {
     public void setNextState(boolean value) {
         nextAlive = value;
         //after die reset back to normal state(without disease)
-        setDiseaseState(value);
     }
 
     /**
@@ -68,7 +67,7 @@ public abstract class Cell {
     public void updateState() {
         alive = nextAlive;
     }
-
+    
     /**
      * Changes the color of the cell
      */
@@ -115,6 +114,7 @@ public abstract class Cell {
         // Check if the random number is 0 (1/10 chance) to die 
         if (randomNumber == 0) {
             setNextState(false);
+            setDiseaseState(false);
         }
     }
     public void setDiseaseState(boolean value) {

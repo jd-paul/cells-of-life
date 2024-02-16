@@ -18,9 +18,9 @@ public class Simulator {
     private static final double BOZIUM_ALIVE_PROB = 0.25;
     private static final double YERSINIA_ALIVE_PROB = 0.25;
     
-    private Color mycoColor = Color.rgb(255, 165, 0);
-    private Color bozColor = Color.rgb(100, 55, 0);
-    private Color yerColor = Color.rgb(220, 20, 60);
+    public static final Color mycoColor = Color.rgb(0, 255, 0);
+    public static final Color bozColor = Color.rgb(0, 0, 255);
+    public static final Color yerColor = Color.rgb(225, 0, 0);
 
     private List<Cell> cells;
     private Field field;

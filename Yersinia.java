@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class Yersinia extends Cell
 {
-    private Color yerColor = Color.rgb(220, 20, 60);
-    
+    private Color yerColor = Color.rgb(225, 0, 0);
+    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
@@ -22,7 +22,7 @@ public class Yersinia extends Cell
     }
     public void randomDisease(){
         // Generate a random number between 0 (inclusive) and 10 (exclusive)
-        int randomNumber = rand.nextInt(10);
+        int randomNumber = rand.nextInt(2);
 
         // Check if the random number is 0 (1/10 chance) to die 
         if (randomNumber == 0) {
@@ -34,10 +34,6 @@ public class Yersinia extends Cell
     */
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
-        for(Cell cell: neighbours) {
-            cell.setColor(yerColor);
-        }
-        
         setNextState(false);
         
         System.out.println(neighbours);
@@ -46,6 +42,12 @@ public class Yersinia extends Cell
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                for(Cell cell: neighbours) {
+                    if(cell.getColor().equals(yerColor)){
+                    setDiseaseState(true);
+                    setColor(infectedColor);
+                    }
+                }
                 if(getDiseaseState()){
                     randomDie();
                 }   

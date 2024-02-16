@@ -1,3 +1,4 @@
+
 import javafx.scene.paint.Color; 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  */
 
 public class Mycoplasma extends Cell {
+    private Color yerColor = Color.rgb(225, 0, 0);
+    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
@@ -33,6 +36,12 @@ public class Mycoplasma extends Cell {
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                for(Cell cell: neighbours) {
+                    if(cell.getColor().equals(yerColor)){
+                    setDiseaseState(true);
+                    setColor(infectedColor);
+                    }
+                }
                 if(getDiseaseState()){
                     randomDie();
                 }

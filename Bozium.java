@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class Bozium extends Cell
 {
+    private Color yerColor = Color.rgb(225, 0, 0);
+    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
@@ -29,15 +31,19 @@ public class Bozium extends Cell
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-        
         System.out.println(neighbours);
-        
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                for(Cell cell: neighbours) {
+                    if(cell.getColor().equals(yerColor)){
+                    setDiseaseState(true);
+                    setColor(infectedColor);
+                    }
+                }
                 if(getDiseaseState()){
-                    randomDie();
+                    randomDie();                    
                 } 
             }
             else {
