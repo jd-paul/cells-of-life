@@ -18,7 +18,15 @@ public class Yersinia extends Cell
     public Yersinia(Field field, Location location, Color col) {
         super(field, location, col);
     }
-    
+    public void randomDisease(){
+        // Generate a random number between 0 (inclusive) and 10 (exclusive)
+        int randomNumber = rand.nextInt(10);
+
+        // Check if the random number is 0 (1/10 chance) to die 
+        if (randomNumber == 0) {
+            setDiseaseState(true);
+        }
+    }
     /**
     * This is how the Yersinia decides if it's alive or not
     */
@@ -32,6 +40,12 @@ public class Yersinia extends Cell
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                if(getDiseaseState()){
+                    randomDie();
+                }   
+                else{
+                    randomDisease();
+                }
             }
             else {
                 setNextState(false);
