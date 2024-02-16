@@ -139,7 +139,7 @@ public class Field {
      * @return A list of living neighbours
      */
     public List<Cell> getLivingNeighbours(Location location) {
-
+        
       assert location != null : "Null location passed to adjacentLocations";
       List<Cell> neighbours = new LinkedList<>();
 
