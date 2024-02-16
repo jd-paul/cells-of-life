@@ -29,10 +29,6 @@ public class Mycoplasma extends Cell {
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-<<<<<<< HEAD
-        
-=======
->>>>>>> 7a7ea9c78e4392e6b139917edcef105a30004328
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
