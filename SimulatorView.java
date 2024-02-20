@@ -96,14 +96,17 @@ public class SimulatorView extends Application {
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Cell cell = field.getObjectAt(row, col);
-        
-                if (cell != null && cell.isAlive()) {
-                    stats.incrementCount(cell.getClass());
-                    fieldCanvas.drawMark(col, row, cell.getColor());
-                }
-                else {
-                    fieldCanvas.drawMark(col, row, EMPTY_COLOR);
-                }
+                
+                stats.incrementCount(cell.getClass());
+                fieldCanvas.drawMark(col, row, cell.getColor());
+                
+                // if (cell != null && cell.isAlive()) {
+                    // stats.incrementCount(cell.getClass());
+                    // fieldCanvas.drawMark(col, row, cell.getColor());
+                // }
+                // else {
+                    // fieldCanvas.drawMark(col, row, EMPTY_COLOR);
+                // }
             }
         }
         

@@ -21,6 +21,7 @@ public class Simulator {
     public static final Color mycoColor = Color.rgb(0, 255, 0);
     public static final Color bozColor = Color.rgb(0, 0, 255);
     public static final Color yerColor = Color.rgb(225, 0, 0);
+    public static final Color placeholderColor = Color.rgb(224, 224, 224);
 
     private List<Cell> cells;
     private Field field;
@@ -54,9 +55,45 @@ public class Simulator {
             Cell cell = it.next();
             cell.act();
         }
-
+        /**
+         * Maybe it doesn't work because the newly created cell (Ex: myco placeholder)
+         * aren't being appended to the cells list?
+         * 
+         * SimulatorView : updateCanvas USES the field for this purpose.
+         */
         for (Cell cell : cells) {
             cell.updateState();
+            
+            if (cell.isAlive() == false) {
+                cell = new Placeholder(cell.getField(), cell.getLocation(), placeholderColor);
+                cell.setNextState(false);
+                //cells.add(cell);
+            }
+            else if(cell.isAlive() == true && cell instanceof Placeholder) {
+                //System.out.println(cell);
+                cell = new Mycoplasma(cell.getField(), cell.getLocation(), mycoColor);
+                cell.setNextState(true);
+                //System.out.println(cell); // It actually does convert to a new cell.
+                //cells.add(cell);
+                
+                
+                // *** IMPLEMENT
+                /**
+                 * So what you're supposed to do is actually update the current cell on the
+                 * board, and replace the placeholder cell with a new cell.
+                 */
+                
+                
+                
+                //field.place(newCell, cell.getLocation());
+                //System.out.println("New cell placed!");
+                
+                // field.place(cell, cell.getRow(), cell.getCol());
+                
+                // cells[cell.getRow()][cell.getCol()] = new Mycoplasma(cell.getField(), cell.getLocation(), mycoColor);
+                // cells.add(cell);
+            }
+            else if(cell.isAlive() == true && cell instanceof Placeholder) {}
         }
     }
 
@@ -77,19 +114,21 @@ public class Simulator {
         field.clear();
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                int n = rand.nextInt(3);
+                int n = rand.nextInt(1);
                 Location location = new Location(row, col);
                 
                 if (n == 0) {
-                    Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                     if (rand.nextDouble() <= MYCOPLASMA_ALIVE_PROB) {
+                        Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                         cells.add(myco);
                     }
                     else {
-                        myco.setDead();
-                        cells.add(myco);
-    
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        placeholder.setDead();
+                        cells.add(placeholder);
                     }
+                    
+                    
                 } else if (n == 1) {
                     Bozium boz = new Bozium(field, location, bozColor);
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {

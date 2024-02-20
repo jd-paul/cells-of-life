@@ -17,6 +17,9 @@ public abstract class Cell {
     private Location location;
     private Color color = Color.WHITE;
     Random rand = new Random();
+    
+    // private int row;
+    // private int col;
     /**
      * Create a new cell at location in field.
      *
@@ -123,4 +126,17 @@ public abstract class Cell {
     public boolean getDiseaseState() {
         return hasDisease;
     }
+    
+    // public void updateCoordinates(int r, int c) {
+        // row = r;
+        // col = c;
+    // }
+    
+    // public int getRow() {
+        // return row;
+    // }
+    
+    // public int getCol() {
+        // return col;
+    // }
 }
