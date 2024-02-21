@@ -124,7 +124,7 @@ public class SimulatorView extends Application {
 
     /**
      * Run the simulation from its current state for the given number of
-     * generations.  Stop before the given number of generations if the
+     * generations. Stop before the given number of generations if the
      * simulation ceases to be viable.
      * @param numGenerations The number of generations to run for.
      */
@@ -133,7 +133,7 @@ public class SimulatorView extends Application {
            
             for (int gen = 1; gen <= numGenerations; gen++) {
                 simulator.simOneGeneration();    
-                simulator.delay(500);
+                simulator.delay(1000); // Used to be 500!
                 Platform.runLater(() -> {
                     updateCanvas(simulator.getGeneration(), simulator.getField());
                 });

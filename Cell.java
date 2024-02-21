@@ -55,6 +55,13 @@ public abstract class Cell {
     protected void setDead() {
         alive = false;
     }
+    
+    /**
+     * Indicate that the cell is now alive.
+     */
+    protected void setAlive() {
+        alive = true;
+    }
 
     /**
      * Indicate that the cell will be alive or dead in the next generation.

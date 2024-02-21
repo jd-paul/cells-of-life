@@ -55,46 +55,104 @@ public class Simulator {
             Cell cell = it.next();
             cell.act();
         }
-        /**
-         * Maybe it doesn't work because the newly created cell (Ex: myco placeholder)
-         * aren't being appended to the cells list?
+        
+        
+        /** *** FIX IMPLEMENT!
          * 
-         * SimulatorView : updateCanvas USES the field for this purpose.
+         * Update each cell first. Then determine if it needs to be converted
+         * to a new cell type. Then update state again.
+         * 
+         * Note that updateState() uses the act() command and follows what its state
+         * should be next.
+         * 
+         * Current LOGIC
+         *      1: Each cell does act(). This means that their next state (dead / alive)
+         *      is determined.
+         *      
+         *      2: Each cell is updated to their new state. This means that their var
+         *      'alive' is set accordingly.
+         *      
+         *      3: Each cell is then converted to the correct cell that they should be.
+         *      'Dead' cells are converted to placeholders. 'Alive' placeholders are
+         *      converted to mycoplasma.
+         *      
+         *      4: 
+         *      
+         *      
          */
         for (Cell cell : cells) {
             cell.updateState();
             
-            if (cell.isAlive() == false) {
+            /**
+             * If the current cell is NOT a placeholder, and is dead, it is converted
+             * to a placeholder.
+             * 
+             * P: This converts dead mycoplasma into placeholder cells.
+             */
+            if ((cell instanceof Mycoplasma) && cell.isAlive() == false) {
                 cell = new Placeholder(cell.getField(), cell.getLocation(), placeholderColor);
-                cell.setNextState(false);
-                //cells.add(cell);
+                // cell.setDead();
+                // cell.setNextState(false); // Doesn't seem important
             }
-            else if(cell.isAlive() == true && cell instanceof Placeholder) {
-                //System.out.println(cell);
+            
+            /**
+             * If the current cell is a placeholder, and is alive, it is converted
+             * to mycoplasma.
+             * 
+             * P: This converts living placeholder cells into mycoplasma.
+             */
+            else if(cell instanceof Placeholder && cell.isAlive() == true) {
                 cell = new Mycoplasma(cell.getField(), cell.getLocation(), mycoColor);
-                cell.setNextState(true);
-                //System.out.println(cell); // It actually does convert to a new cell.
-                //cells.add(cell);
-                
-                
-                // *** IMPLEMENT
-                /**
-                 * So what you're supposed to do is actually update the current cell on the
-                 * board, and replace the placeholder cell with a new cell.
-                 */
-                
-                
-                
-                //field.place(newCell, cell.getLocation());
-                //System.out.println("New cell placed!");
-                
-                // field.place(cell, cell.getRow(), cell.getCol());
-                
-                // cells[cell.getRow()][cell.getCol()] = new Mycoplasma(cell.getField(), cell.getLocation(), mycoColor);
-                // cells.add(cell);
+                //cell.setNextState(true);
+                //cell.setAlive();
             }
-            else if(cell.isAlive() == true && cell instanceof Placeholder) {}
+            
+            else if(cell.isAlive() == true) {
+                
+            }
+            
+            /**
+             * In a for-loop, you cannot modify the cell variable itself as you're iterating
+             * through it...
+             */
+            
+            /**
+             * Unsure if these statements are required.
+             */
+            //cell.act();
+            //cell.updateState();
         }
+        
+        // for (Cell cell : cells) {
+            // cell.act();
+            // cell.updateState();
+        // }
+        
+        
+        // for (Cell cell : cells) {
+            // cell.updateState();
+            
+            // if (cell.isAlive() == false) {
+                // cell = new Placeholder(cell.getField(), cell.getLocation(), placeholderColor);
+                // cell.setNextState(false);
+            // }
+            // else if(cell.isAlive() == true && cell instanceof Placeholder) {
+                // //System.out.println(cell);
+                // cell = new Mycoplasma(cell.getField(), cell.getLocation(), mycoColor);
+                // cell.setNextState(true);
+                // cell.setAlive();
+                // //System.out.println(cell); // It actually does convert to a new cell.
+                
+                // /**
+                 // * So what you're supposed to do is actually update the current cell on the
+                 // * board, and replace the placeholder cell with a new cell.
+                 // */
+            // }
+            // else if(cell.isAlive() == true) {}
+            
+            // cell.act();
+            // cell.updateState();
+        // }
     }
 
     /**
@@ -127,8 +185,6 @@ public class Simulator {
                         placeholder.setDead();
                         cells.add(placeholder);
                     }
-                    
-                    
                 } else if (n == 1) {
                     Bozium boz = new Bozium(field, location, bozColor);
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
