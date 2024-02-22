@@ -72,7 +72,7 @@ public abstract class Cell {
     }
 
     /**
-     * Changes the state of the cell
+     * Changes the state of the cell.
      */
     public void updateState() {
         alive = nextAlive;

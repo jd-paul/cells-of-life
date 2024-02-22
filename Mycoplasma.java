@@ -45,9 +45,6 @@ public class Mycoplasma extends Cell {
                     // randomDie();
                 // }
             }
-            else {
-                setNextState(true);
-            }
         }
         // if (isAlive() == false) {
             // if (neighbours.size() == 3) {
