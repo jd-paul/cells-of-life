@@ -29,12 +29,31 @@ public class Mycoplasma extends Cell {
     * This is how the Mycoplasma decides if it's alive or not
     */
     public void act() {
-        List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
+        List<Cell> neighbours = getField().getLivingNeighbours(getLocation()); // Note that this gives out a list of living cells. Placeholder cells are DEAD.
         setNextState(false);
+        
+        int mycoCount = 0, yerCount = 0, bozCount = 0, totalCount = neighbours.size();
+        
+        for (Cell cell : neighbours) {
+            if (cell instanceof Mycoplasma) {
+                mycoCount++;
+            }
+            if (cell instanceof Yersinia) {
+                yerCount++;
+            }
+            if (cell instanceof Bozium) {
+                bozCount++;
+            }
+        }
+        
         
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                
+                
+                
+                
                 // for(Cell cell: neighbours) {
                     // if(cell.getColor().equals(yerColor)){
                     // setDiseaseState(true);
