@@ -86,36 +86,40 @@ public class Simulator {
                 Cell currentCell = field.getObjectAt(location);
                 
                 /**
-                 * Living placeholders
-                 */
+                 * Placeholders are converted
+                 */                
                 
-                if (currentCell instanceof Placeholder && currentCell.isAlive() == true) {
-                    Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
+                if (currentCell instanceof Placeholder) {
+                    if (currentCell.isAlive() == true) {
+                        Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                         
-                    field.place(myco, location);
-                    myco.setAlive();
-                }
-                else if (currentCell instanceof Placeholder && currentCell.isAlive() == false) {
-                    Placeholder placeholder = new Placeholder(field, location, placeholderColor);
-                    
-                    field.place(placeholder, location);
-                    placeholder.setDead();
+                        field.place(myco, location);
+                        myco.setAlive();
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        
+                        field.place(placeholder, location);
+                        placeholder.setDead();
+                    }
                 }
                 
                 /**
-                 * Dead mycoplasma
+                 * Mycoplasma cells are converted
                  */
-                else if (currentCell instanceof Mycoplasma && currentCell.isAlive() == true) {
-                    Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
+                else if (currentCell instanceof Mycoplasma) {
+                    if (currentCell.isAlive() == true) {
+                        Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                     
-                    field.place(myco, location);
-                    myco.setAlive();
-                }
-                else if (currentCell instanceof Mycoplasma && currentCell.isAlive() == false) {
-                    Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        field.place(myco, location);
+                        myco.setAlive();
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
                     
                     field.place(placeholder, location);
                     placeholder.setDead();
+                    }
                 }
             }
         }
