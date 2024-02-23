@@ -11,6 +11,8 @@ public class Yersinia extends Cell
 {
     private Color yerColor = Color.rgb(225, 0, 0);
     private Color infectedColor = Color.rgb(225, 234, 0);
+    
+    private final int YERSINIA_DISEASE_CHANCE = 1;
     /**
      * Create a new Mycoplasma.
      *
@@ -25,7 +27,7 @@ public class Yersinia extends Cell
         int randomNumber = rand.nextInt(2);
 
         // Check if the random number is 0 (1/10 chance) to die 
-        if (randomNumber == 0) {
+        if (randomNumber == YERSINIA_DISEASE_CHANCE) {
             setDiseaseState(true);
         }
     }
@@ -43,12 +45,12 @@ public class Yersinia extends Cell
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
                 for(Cell cell: neighbours) {
-                    if(cell.getColor().equals(yerColor)){
+                    if(cell.hasDisease()){
                     setDiseaseState(true);
                     setColor(infectedColor);
                     }
                 }
-                if(getDiseaseState()){
+                if(hasDisease()){
                     randomDie();
                 }   
                 else{
@@ -60,10 +62,12 @@ public class Yersinia extends Cell
             }
                 
         }
+        /*
         if (isAlive() == false) {
             if (neighbours.size() == 3) {
                 setNextState(true);
             }
         }
+        */
     }
 }

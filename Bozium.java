@@ -24,38 +24,29 @@ public class Bozium extends Cell
     public Bozium(Field field, Location location, Color col) {
         super(field, location, col);
     }
-    
+
     /**
-    * This is how the Mycoplasma decides if it's alive or not
-    */
+     * This is how the Mycoplasma decides if it's alive or not
+     */
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-        
+
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
                 for(Cell cell: neighbours) {
-                    if(cell.getColor().equals(yerColor)){
+                    if(cell.hasDisease()){
                         setDiseaseState(true);
                         setColor(infectedColor);
                     }
                 }
-                if(getDiseaseState()){
-                    randomDie();                    
-                } 
-            }
-            else {
-                setNextState(false);
-            }
-                
-        }
-        if (isAlive() == false) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
+                if(hasDisease()){
+                    randomDie();
+                }
             }
         }
-        
     }
 }
+

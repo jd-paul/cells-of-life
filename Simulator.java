@@ -101,7 +101,7 @@ public class Simulator {
                             
                         }
                         else if (currentCell.getNextCell().equals("yersinia")) {
-                            Yersinia yer = new Yersinia(field, location, bozColor);
+                            Yersinia yer = new Yersinia(field, location, yerColor);
                     
                             field.place(yer, location);
                             yer.setAlive();
@@ -160,9 +160,9 @@ public class Simulator {
                 /**
                  * Yersinia cells are converted
                  */
-                else if (currentCell instanceof Mycoplasma) {
+                else if (currentCell instanceof Yersinia) {
                     if (currentCell.isAlive() == true) {
-                        Yersinia yer= new Yersinia(field, location, yerColor);
+                        Yersinia yer = new Yersinia(field, location, yerColor);
                     
                         field.place(yer, location);
                         yer.setAlive();

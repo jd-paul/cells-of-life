@@ -52,19 +52,19 @@ public class Placeholder extends Cell
          * Only one type of nearby cell
          */
         else if (adjMyco && !adjBoz && !adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 setNextCell("mycoplasma");
             }
         }
         else if (!adjMyco && adjBoz && !adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 setNextCell("bozium");
             }
         }
         else if (!adjMyco && !adjBoz && adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 setNextCell("yersinia");
             }
@@ -74,7 +74,7 @@ public class Placeholder extends Cell
          * Only two types of nearby cells
          */
         else if (adjMyco && adjBoz && !adjYer) {
-            if (neighbours.size() == 1 || neighbours.size() == 2) {
+            if (neighbours.size() == 2) {
                 setNextState(true);
                 int n = rand.nextInt(2);
                 if (n == 0) {setNextCell("mycoplasma");}
@@ -82,7 +82,7 @@ public class Placeholder extends Cell
             }
         }
         else if (!adjMyco && adjBoz && adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
                 if (n == 0 || n == 1) {setNextCell("bozium");}
@@ -90,7 +90,7 @@ public class Placeholder extends Cell
             }
         }
         else if (adjMyco && !adjBoz && adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
                 if (n == 0 || n == 1) {setNextCell("mycoplasma");}
@@ -102,7 +102,7 @@ public class Placeholder extends Cell
          * Only three types of nearby cells
          */
         else if (adjMyco && adjBoz && adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
                 if (n == 0) {setNextCell("mycoplasma");}
