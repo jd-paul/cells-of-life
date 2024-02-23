@@ -50,25 +50,21 @@ public class Mycoplasma extends Cell {
         if (isAlive() == true) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
-                
-                
-                
-                
-                // for(Cell cell: neighbours) {
-                    // if(cell.getColor().equals(yerColor)){
-                    // setDiseaseState(true);
-                    // setColor(infectedColor);
-                    // }
-                // }
-                // if(getDiseaseState()){
-                    // randomDie();
-                // }
+                 for(Cell cell: neighbours) {
+                     if(cell.getColor().equals(yerColor)){
+                     setDiseaseState(true);
+                     setColor(infectedColor);
+                     }
+                 }
+                 if(getDiseaseState()){
+                     randomDie();
+                 }
             }
         }
-        // if (isAlive() == false) {
-            // if (neighbours.size() == 3) {
-                // setNextState(true);
-            // }
-        // }
+         if (isAlive() == false) {
+             if (neighbours.size() == 3) {
+                 setNextState(true);
+             }
+         }
     }
 }

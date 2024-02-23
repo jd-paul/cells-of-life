@@ -142,10 +142,10 @@ public class Simulator {
         field.clear();
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                int n = rand.nextInt(1);
+                int n = rand.nextInt(3);
                 Location location = new Location(row, col);
                 
-                n = 0;
+                
                 if (n == 0) {
                     if (rand.nextDouble() <= MYCOPLASMA_ALIVE_PROB) {
                         Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
@@ -153,7 +153,7 @@ public class Simulator {
                         field.place(myco, location);
                         myco.setAlive();
                         
-                        //cells.add(myco);
+                        cells.add(myco);
                     }
                     else {
                         Placeholder placeholder = new Placeholder(field, location, placeholderColor);
@@ -161,11 +161,11 @@ public class Simulator {
                         field.place(placeholder, location);
                         placeholder.setDead();
                         
-                        //cells.add(placeholder);
+                        cells.add(placeholder);
                     }
                 }
                 
-                /*
+                
                 else if (n == 1) {
                     Bozium boz = new Bozium(field, location, bozColor);
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
@@ -185,7 +185,7 @@ public class Simulator {
                         cells.add(yer);
                     }
                 }
-                */
+                
             }
         }
     }
