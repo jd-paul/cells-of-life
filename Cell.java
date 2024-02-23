@@ -20,7 +20,7 @@ public abstract class Cell {
     
     protected String nextCell = "";
     protected boolean hasDisease;
-    
+    protected boolean nextDisease;
     /**
      * Create a new cell at location in field.
      *
@@ -30,6 +30,7 @@ public abstract class Cell {
     public Cell(Field field, Location location, Color col) {
         alive = true;
         hasDisease = false;
+        nextDisease = false;
         nextAlive = false;
         this.field = field;
         setLocation(location);

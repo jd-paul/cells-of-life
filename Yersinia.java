@@ -11,7 +11,7 @@ public class Yersinia extends Cell
 {
     private Color infectedColor = Color.rgb(225, 234, 0);
 
-    private final int YERSINIA_DISEASE_CHANCE = 0;
+    private final int YERSINIA_DISEASE_CHANCE = 1;
     /**
      * Create a new Mycoplasma.
      *
@@ -29,6 +29,7 @@ public class Yersinia extends Cell
         // Check if the random number is 0 (1/10 chance) to die 
         if (randomNumber == YERSINIA_DISEASE_CHANCE) {
             setDiseaseState(true);
+            setColor(infectedColor);
         }
         System.out.println("test");
     }
@@ -43,23 +44,25 @@ public class Yersinia extends Cell
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
         /* IMPLEMENT WITH NEW RULES! */
-        // if (isAlive() == true) {
-        // if (neighbours.size() == 2 || neighbours.size() == 3) {
-        // setNextState(true);
-        // for(Cell cell: neighbours) {
-        // if(cell.hasDisease()){
-        // setDiseaseState(true);
-        // setColor(infectedColor);
-        // }
-        // }
-        // if(hasDisease()){
-        // randomDie();
-        // }   
-        // else{
-        // randomDisease();
-        // }
-        // }
-        // }
+        /*
+        if (isAlive() == true) {
+        if (neighbours.size() == 2 || neighbours.size() == 3) {
+        setNextState(true);
+        for(Cell cell: neighbours) {
+        if(cell.hasDisease()){
+        setDiseaseState(true);
+        setColor(infectedColor);
+        }
+        }
+        if(hasDisease()){
+        randomDie();
+        }   
+        else{
+        randomDisease();
+        }
+        }
+        }
+         */
 
         if (isAlive() == true) {
 
@@ -67,6 +70,7 @@ public class Yersinia extends Cell
                 if(cell.hasDisease()){
                     setDiseaseState(true);
                     setColor(infectedColor);
+                    System.out.println("test2");
                 }
                 if (cell instanceof Mycoplasma) {
                     adjMyco = true;
@@ -78,7 +82,7 @@ public class Yersinia extends Cell
                     adjBoz = true;
                 }
             }
-                
+
             if(adjMyco && !adjBoz && (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3)){
                 setNextState(true);
             }
@@ -92,7 +96,8 @@ public class Yersinia extends Cell
                 randomDie();
             }
             else{
-            randomDisease();
+                randomDisease();
+                System.out.println("test3");
             }
         }
         /*

@@ -100,12 +100,12 @@ public class SimulatorView extends Application {
                 fieldCanvas.drawMark(col, row, cell.getColor());
 
                 // if (cell != null && cell.isAlive()) {
-                    // stats.incrementCount(cell.getClass());
+                  //   stats.incrementCount(cell.getClass());
                     // fieldCanvas.drawMark(col, row, cell.getColor());
-                // }
-                // else {
-                    // fieldCanvas.drawMark(col, row, EMPTY_COLOR);
-                // }
+                 //}
+                 //else {
+                  //   fieldCanvas.drawMark(col, row, EMPTY_COLOR);
+                //}
             }
         }
 
