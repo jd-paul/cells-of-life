@@ -1,5 +1,6 @@
 import javafx.scene.paint.Color; 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Write a description of class Placeholder_Cell here.
@@ -20,44 +21,94 @@ public class Placeholder extends Cell
     }
 
     /**
-    * This is how the Placeholder decides if it's alive or not
-    */
+     * This is how the Placeholder decides if it's alive or not
+     */
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation()); // Note that this gives out a list of living cells. Placeholder cells are DEAD.
         setNextState(false);
-        
-        int mycoCount = 0, yerCount = 0, bozCount = 0, totalCount = neighbours.size();
+        setNextCell("placeholder");
+
         boolean adjMyco = false, adjYer = false, adjBoz = false;
-        
+        Random rand = Randomizer.getRandom();
+
         for (Cell cell : neighbours) {
             if (cell instanceof Mycoplasma) {
-                mycoCount++;
                 adjMyco = true;
             }
             if (cell instanceof Yersinia) {
-                yerCount++;
                 adjYer = true;
             }
             if (cell instanceof Bozium) {
-                bozCount++;
                 adjBoz = true;
             }
         }
-        
-        if (adjMyco & adjBoz) {
-            if (neighbours.size() == 1 || neighbours.size() == 2) {
-                setNextState(true);
-            }
+
+        if (!adjMyco && !adjBoz && !adjYer) {
+            setNextState(false);
+            setNextCell("placeholder");
         }
-        else if (adjMyco != adjBoz) {
+
+        /**
+         * Only one type of nearby cell
+         */
+        else if (adjMyco && !adjBoz && !adjYer) {
             if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
+                setNextCell("mycoplasma");
+            }
+        }
+        else if (!adjMyco && adjBoz && !adjYer) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
+                setNextState(true);
+                setNextCell("bozium");
+            }
+        }
+        else if (!adjMyco && !adjBoz && adjYer) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
+                setNextState(true);
+                setNextCell("yersinia");
             }
         }
 
-        if (neighbours.size() == 3) {
-            setNextState(true);
+        /**
+         * Only two types of nearby cells
+         */
+        else if (adjMyco && adjBoz && !adjYer) {
+            if (neighbours.size() == 1 || neighbours.size() == 2) {
+                setNextState(true);
+                int n = rand.nextInt(2);
+                if (n == 0) {setNextCell("mycoplasma");}
+                else if (n == 1) {setNextCell("bozium");}
+            }
         }
-        
+        else if (!adjMyco && adjBoz && adjYer) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
+                setNextState(true);
+                int n = rand.nextInt(3);
+                if (n == 0 || n == 1) {setNextCell("bozium");}
+                else if (n == 2) {setNextCell("yersinia");}
+            }
+        }
+        else if (adjMyco && !adjBoz && adjYer) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
+                setNextState(true);
+                int n = rand.nextInt(3);
+                if (n == 0 || n == 1) {setNextCell("mycoplasma");}
+                else if (n == 2) {setNextCell("yersinia");}
+            }
+        }
+
+        /**
+         * Only three types of nearby cells
+         */
+        else if (adjMyco && adjBoz && adjYer) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
+                setNextState(true);
+                int n = rand.nextInt(3);
+                if (n == 0) {setNextCell("mycoplasma");}
+                else if (n == 1) {setNextCell("bozium");}
+                else if (n == 2) {setNextCell("yersinia");}
+            }
+        }
     }
 }

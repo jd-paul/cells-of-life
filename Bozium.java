@@ -31,15 +31,15 @@ public class Bozium extends Cell
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-        System.out.println(neighbours);
+        
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
-            if (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 2 || neighbours.size() == 3) {
                 setNextState(true);
                 for(Cell cell: neighbours) {
                     if(cell.getColor().equals(yerColor)){
-                    setDiseaseState(true);
-                    setColor(infectedColor);
+                        setDiseaseState(true);
+                        setColor(infectedColor);
                     }
                 }
                 if(getDiseaseState()){

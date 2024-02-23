@@ -54,10 +54,6 @@ public class Simulator {
         Random rand = Randomizer.getRandom();
         
         /**
-         * Explanation of LOGIC: 
-         */
-        
-        /**
          * 1. Each cell will act();
          */
         for (int row = 0; row < field.getDepth(); row++) {
@@ -91,10 +87,31 @@ public class Simulator {
                 
                 if (currentCell instanceof Placeholder) {
                     if (currentCell.isAlive() == true) {
-                        Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
+                        if (currentCell.getNextCell().equals("mycoplasma")) {
+                            Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                         
-                        field.place(myco, location);
-                        myco.setAlive();
+                            field.place(myco, location);
+                            myco.setAlive();
+                        }
+                        else if (currentCell.getNextCell().equals("bozium")) {
+                            Bozium boz = new Bozium(field, location, bozColor);
+                    
+                            field.place(boz, location);
+                            boz.setAlive();
+                            
+                        }
+                        else if (currentCell.getNextCell().equals("yersinia")) {
+                            Yersinia yer = new Yersinia(field, location, bozColor);
+                    
+                            field.place(yer, location);
+                            yer.setAlive();
+                        }
+                        else {
+                            Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        
+                            field.place(placeholder, location);
+                            placeholder.setDead();
+                        }
                     }
                     else if (currentCell.isAlive() == false) {
                         Placeholder placeholder = new Placeholder(field, location, placeholderColor);
@@ -117,8 +134,44 @@ public class Simulator {
                     else if (currentCell.isAlive() == false) {
                         Placeholder placeholder = new Placeholder(field, location, placeholderColor);
                     
-                    field.place(placeholder, location);
-                    placeholder.setDead();
+                        field.place(placeholder, location);
+                        placeholder.setDead();
+                    }
+                }
+                
+                /**
+                 * Bozium cells are converted
+                 */
+                else if (currentCell instanceof Bozium) {
+                    if (currentCell.isAlive() == true) {
+                        Bozium boz = new Bozium(field, location, bozColor);
+                    
+                        field.place(boz, location);
+                        boz.setAlive();
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                    
+                        field.place(placeholder, location);
+                        placeholder.setDead();
+                    }
+                }
+                
+                /**
+                 * Yersinia cells are converted
+                 */
+                else if (currentCell instanceof Mycoplasma) {
+                    if (currentCell.isAlive() == true) {
+                        Yersinia yer= new Yersinia(field, location, yerColor);
+                    
+                        field.place(yer, location);
+                        yer.setAlive();
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        
+                        field.place(placeholder, location);
+                        placeholder.setDead();
                     }
                 }
             }
@@ -167,25 +220,40 @@ public class Simulator {
                 
                 
                 else if (n == 1) {
-                    Bozium boz = new Bozium(field, location, bozColor);
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
+                        Bozium boz = new Bozium(field, location, bozColor);
+                        
+                        field.place(boz, location);
+                        boz.setAlive();
+                        
                         cells.add(boz);
                     }
                     else {
-                        boz.setDead();
-                        cells.add(boz);
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        
+                        field.place(placeholder, location);
+                        placeholder.setDead();
+                        
+                        cells.add(placeholder);
                     }
                 } else if (n == 2) {
-                    Yersinia yer = new Yersinia(field, location, yerColor);
-                    if (rand.nextDouble() <= YERSINIA_ALIVE_PROB) {
+                    if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
+                        Yersinia yer = new Yersinia(field, location, yerColor);
+                        
+                        field.place(yer, location);
+                        yer.setAlive();
+                        
                         cells.add(yer);
                     }
                     else {
-                        yer.setDead();
-                        cells.add(yer);
+                        Placeholder placeholder = new Placeholder(field, location, placeholderColor);
+                        
+                        field.place(placeholder, location);
+                        placeholder.setDead();
+                        
+                        cells.add(placeholder);
                     }
                 }
-                
             }
         }
     }

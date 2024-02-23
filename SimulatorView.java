@@ -23,7 +23,7 @@ public class SimulatorView extends Application {
     public static final int GRID_HEIGHT = 80;    
     public static final int WIN_WIDTH = 650;
     public static final int WIN_HEIGHT = 650;  
-    
+
     private static final Color EMPTY_COLOR = Color.WHITE;
 
     private final String GENERATION_PREFIX = "Generation: ";
@@ -42,14 +42,14 @@ public class SimulatorView extends Application {
      */
     @Override
     public void start(Stage stage) {
-                
+
         stats = new FieldStats();
         fieldCanvas = new FieldCanvas(WIN_WIDTH - 50, WIN_HEIGHT - 50);
         fieldCanvas.setScale(GRID_HEIGHT, GRID_WIDTH); 
         simulator = new Simulator();
 
         Group root = new Group();
-        
+
         genLabel = new Label(GENERATION_PREFIX);
         infoLabel = new Label("  ");
         population = new Label(POPULATION_PREFIX);
@@ -57,23 +57,22 @@ public class SimulatorView extends Application {
         BorderPane bPane = new BorderPane(); 
         HBox infoPane = new HBox();
         HBox popPane = new HBox();
-        
 
         infoPane.setSpacing(10);
         infoPane.getChildren().addAll(genLabel, infoLabel);       
         popPane.getChildren().addAll(population); 
-        
+
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
         bPane.setBottom(population);
-        
+
         root.getChildren().add(bPane);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
-        
+
         stage.setScene(scene);          
         stage.setTitle("Life Simulation");
         updateCanvas(simulator.getGeneration(), simulator.getField());
-        
+
         stage.show();     
     }
 
@@ -92,24 +91,24 @@ public class SimulatorView extends Application {
     public void updateCanvas(int generation, Field field) {
         genLabel.setText(GENERATION_PREFIX + generation);
         stats.reset();
-        
+
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Cell cell = field.getObjectAt(row, col);
-                
+
                 stats.incrementCount(cell.getClass());
                 fieldCanvas.drawMark(col, row, cell.getColor());
-                
-                 if (cell != null && cell.isAlive()) {
-                     stats.incrementCount(cell.getClass());
-                     fieldCanvas.drawMark(col, row, cell.getColor());
-                 }
-                 else {
-                     fieldCanvas.drawMark(col, row, EMPTY_COLOR);
-                 }
+
+                // if (cell != null && cell.isAlive()) {
+                    // stats.incrementCount(cell.getClass());
+                    // fieldCanvas.drawMark(col, row, cell.getColor());
+                // }
+                // else {
+                    // fieldCanvas.drawMark(col, row, EMPTY_COLOR);
+                // }
             }
         }
-        
+
         stats.countFinished();
         population.setText(POPULATION_PREFIX + stats.getPopulationDetails(field));
     }
@@ -130,16 +129,16 @@ public class SimulatorView extends Application {
      */
     public void simulate(int numGenerations) {
         new Thread(() -> {
-           
-            for (int gen = 1; gen <= numGenerations; gen++) {
-                simulator.simOneGeneration();    
-                simulator.delay(500); // Used to be 500
-                Platform.runLater(() -> {
-                    updateCanvas(simulator.getGeneration(), simulator.getField());
-                });
-            }
-            
-        }).start();
+
+                    for (int gen = 1; gen <= numGenerations; gen++) {
+                        simulator.simOneGeneration();    
+                        simulator.delay(500); // Used to be 500
+                        Platform.runLater(() -> {
+                                    updateCanvas(simulator.getGeneration(), simulator.getField());
+                            });
+                    }
+
+            }).start();
     }
 
     /**
@@ -149,8 +148,8 @@ public class SimulatorView extends Application {
         simulator.reset();
         updateCanvas(simulator.getGeneration(), simulator.getField());
     }
-    
+
     public static void main(String args[]){           
         launch(args);      
-   } 
+    } 
 }

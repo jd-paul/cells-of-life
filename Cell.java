@@ -9,17 +9,18 @@ import java.util.List;
  * @version 2022.01.06
  */
 
-public abstract class Cell {
-    private boolean hasDisease; 
+public abstract class Cell { 
     private boolean alive;    
     private boolean nextAlive; // The state of the cell in the next iteration
+    
     private Field field;
     private Location location;
     private Color color = Color.WHITE;
     Random rand = new Random();
     
-    // private int row;
-    // private int col;
+    protected String nextCell = "";
+    protected boolean hasDisease;
+    
     /**
      * Create a new cell at location in field.
      *
@@ -127,23 +128,20 @@ public abstract class Cell {
             setDiseaseState(false);
         }
     }
+    
     public void setDiseaseState(boolean value) {
         hasDisease = value;
     }
-    public boolean getDiseaseState() {
+    
+    public boolean hasDisease() {
         return hasDisease;
     }
     
-    // public void updateCoordinates(int r, int c) {
-        // row = r;
-        // col = c;
-    // }
-    
-    // public int getRow() {
-        // return row;
-    // }
-    
-    // public int getCol() {
-        // return col;
-    // }
+    public void setNextCell(String s) {
+        nextCell = s;
+    }
+
+    public String getNextCell() {
+        return nextCell;
+    }
 }

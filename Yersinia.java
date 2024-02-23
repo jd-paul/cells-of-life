@@ -36,7 +36,7 @@ public class Yersinia extends Cell
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
         
-        System.out.println(neighbours);
+        
         
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
