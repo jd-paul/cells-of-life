@@ -32,19 +32,38 @@ public class Bozium extends Cell
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
 
+        boolean adjMyco = false, adjYer = false, adjBoz = false;
+
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            for (Cell cell : neighbours) {
+                if(cell.hasDisease()){
+                    setDiseaseState(true);
+                    setColor(infectedColor);
+                }
+                if (cell instanceof Mycoplasma) {
+                    adjMyco = true;
+                }
+                if (cell instanceof Yersinia) {
+                    adjYer = true;
+                }
+                if (cell instanceof Bozium) {
+                    adjBoz = true;
+                }
+            }
+
+            if(adjMyco && !adjYer && neighbours.size() == 1){
                 setNextState(true);
-                for(Cell cell: neighbours) {
-                    if(cell.hasDisease()){
-                        setDiseaseState(true);
-                        setColor(infectedColor);
-                    }
-                }
-                if(hasDisease()){
-                    randomDie();
-                }
+            }
+            else if((adjMyco && adjYer) && ((neighbours.size() == 2 || neighbours.size() == 3))){
+                setNextState(true);
+            }
+            else if (neighbours.size() == 2 || neighbours.size() == 3){
+                setNextState(true);
+            }
+
+            if(hasDisease()){
+                randomDie();
             }
         }
     }

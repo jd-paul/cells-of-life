@@ -28,22 +28,48 @@ public class Mycoplasma extends Cell {
      * This is how the Mycoplasma decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getField().getLivingNeighbours(getLocation()); // Note that this gives out a list of living cells. Placeholder cells are DEAD.
+        List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
 
+        boolean adjMyco = false, adjYer = false, adjBoz = false;
+
         if (isAlive() == true) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
-                setNextState(true);
-                for(Cell cell: neighbours) {
-                    if(cell.hasDisease()){
-                        setDiseaseState(true);
-                        setColor(infectedColor);
-                    }
+            for (Cell cell : neighbours) {
+                if(cell.hasDisease()){
+                    setDiseaseState(true);
+                    setColor(infectedColor);
                 }
-                if(hasDisease()){
-                    randomDie();
+                if (cell instanceof Mycoplasma) {
+                    adjMyco = true;
+                }
+                if (cell instanceof Yersinia) {
+                    adjYer = true;
+                }
+                if (cell instanceof Bozium) {
+                    adjBoz = true;
                 }
             }
+
+            if(adjBoz && !adjYer && neighbours.size() == 1){
+                setNextState(true);
+            }
+            else if((adjBoz && adjYer) && (neighbours.size() == 2 || neighbours.size() == 3)){
+                setNextState(true);
+            }
+            else if (neighbours.size() == 2 || neighbours.size() == 3){
+                setNextState(true);
+            }
+
+            if(hasDisease()){
+                randomDie();
+            }
         }
+    }
+
+    /**
+     * IMPLEMENT IN THE FUTURE
+     */
+    private void updateDisease() {
+
     }
 }

@@ -69,7 +69,6 @@ public abstract class Cell {
      */
     public void setNextState(boolean value) {
         nextAlive = value;
-        //after die reset back to normal state(without disease)
     }
 
     /**
@@ -120,12 +119,11 @@ public abstract class Cell {
     
     protected void randomDie(){
         // Generate a random number between 0 (inclusive) and 10 (exclusive)
-        int randomNumber = rand.nextInt(10);
+        int randomNumber = rand.nextInt(100);
 
         // Check if the random number is 0 (1/10 chance) to die 
         if (randomNumber == 0) {
             setNextState(false);
-            setDiseaseState(false);
         }
     }
     

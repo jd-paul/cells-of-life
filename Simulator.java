@@ -14,9 +14,9 @@ import java.util.Random;
 
 public class Simulator {
 
-    private static final double MYCOPLASMA_ALIVE_PROB = 0.25;
-    private static final double BOZIUM_ALIVE_PROB = 0.25;
-    private static final double YERSINIA_ALIVE_PROB = 0.25;
+    private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
+    private static final double BOZIUM_ALIVE_PROB = 0.15;
+    private static final double YERSINIA_ALIVE_PROB = 0.15;
     
     public static final Color mycoColor = Color.rgb(0, 255, 0);
     public static final Color bozColor = Color.rgb(0, 0, 255);
@@ -236,8 +236,9 @@ public class Simulator {
                         
                         cells.add(placeholder);
                     }
-                } else if (n == 2) {
-                    if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
+                } 
+                else if (n == 2) {
+                    if (rand.nextDouble() <= YERSINIA_ALIVE_PROB) {
                         Yersinia yer = new Yersinia(field, location, yerColor);
                         
                         field.place(yer, location);
