@@ -12,16 +12,14 @@ import java.util.List;
  */
 
 public class Mycoplasma extends Cell {
-    private Color yerColor = Color.rgb(225, 0, 0);
-    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Mycoplasma(Field field, Location location, Color col) {
-        super(field, location, col);        
+    public Mycoplasma(Field field, Location location, Color col, boolean disease) {
+        super(field, location, col, disease);
     }
 
     /**
@@ -35,41 +33,14 @@ public class Mycoplasma extends Cell {
 
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
-                if(cell.hasDisease() == true){
-                    setNextDiseaseState(true);
-                    setColor(infectedColor);
-                }
-                if (cell instanceof Mycoplasma) {
-                    adjMyco = true;
-                }
-                if (cell instanceof Yersinia) {
-                    adjYer = true;
-                }
-                if (cell instanceof Bozium) {
-                    adjBoz = true;
-                }
+                if (cell instanceof Mycoplasma) {adjMyco = true;}
+                if (cell instanceof Yersinia) {adjYer = true;}
+                if (cell instanceof Bozium) {adjBoz = true;}
             }
-
-            if(adjBoz && !adjYer && neighbours.size() == 1){
+            
+            if ((neighbours.size() == 2 || neighbours.size() == 3)) {
                 setNextState(true);
-            }
-            else if((adjBoz && adjYer) && (neighbours.size() == 2 || neighbours.size() == 3)){
-                setNextState(true);
-            }
-            else if (neighbours.size() == 2 || neighbours.size() == 3){
-                setNextState(true);
-            }
-
-            if(hasDisease()){
-                randomDie();
             }
         }
-    }
-
-    /**
-     * IMPLEMENT IN THE FUTURE
-     */
-    private void updateDisease() {
-
     }
 }

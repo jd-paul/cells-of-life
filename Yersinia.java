@@ -9,29 +9,14 @@ import java.util.List;
  */
 public class Yersinia extends Cell
 {
-    private Color infectedColor = Color.rgb(225, 234, 0);
-
-    private final int YERSINIA_DISEASE_CHANCE = 1;
     /**
      * Create a new Mycoplasma.
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Yersinia(Field field, Location location, Color col) {
-        super(field, location, col);
-    }
-
-    public void randomDisease(){
-        // Generate a random number between 0 (inclusive) and 10 (exclusive)
-        int randomNumber = rand.nextInt(2);
-
-        // Check if the random number is 0 (1/10 chance) to die 
-        if (randomNumber == YERSINIA_DISEASE_CHANCE) {
-            setNextDiseaseState(true);
-            setColor(infectedColor);
-        }
-        System.out.println("test");
+    public Yersinia(Field field, Location location, Color col, boolean disease) {
+        super(field, location, col, disease);
     }
 
     /**
@@ -40,74 +25,32 @@ public class Yersinia extends Cell
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
+        setNextDiseaseState(false);
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
-        /* IMPLEMENT WITH NEW RULES! */
-        /*
         if (isAlive() == true) {
-        if (neighbours.size() == 2 || neighbours.size() == 3) {
-        setNextState(true);
-        for(Cell cell: neighbours) {
-        if(cell.hasDisease()){
-        setDiseaseState(true);
-        setColor(infectedColor);
-        }
-        }
-        if(hasDisease()){
-        randomDie();
-        }   
-        else{
-        randomDisease();
-        }
-        }
-        }
-         */
-
-        if (isAlive() == true) {
-
+            // Determine next alive
             for (Cell cell : neighbours) {
-                if(cell.hasDisease()){
-                    setNextDiseaseState(true);
-                    setColor(infectedColor);
-                    System.out.println("test2");
-                }
-                if (cell instanceof Mycoplasma) {
-                    adjMyco = true;
-                }
-                if (cell instanceof Yersinia) {
-                    adjYer = true;
-                }
-                if (cell instanceof Bozium) {
-                    adjBoz = true;
-                }
+                if (cell instanceof Mycoplasma) {adjMyco = true;}
+                if (cell instanceof Yersinia) {adjYer = true;}
+                if (cell instanceof Bozium) {adjBoz = true;}
             }
             
-            if(adjMyco && !adjBoz && (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3)){
+            if (adjBoz) {
                 setNextState(true);
             }
-            else if(!adjMyco && adjBoz && (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3)){
+            else if (neighbours.size() == 1 || neighbours.size() == 2) {
                 setNextState(true);
             }
             
-            else if (neighbours.size() == 2 || neighbours.size() == 3){
-                setNextState(true);
+            // Determine next disease
+            if (!hasDisease()){
+                if (catchDiseaseCheck()) {setNextDiseaseState(true);}
             }
-            
-            if(hasDisease()){
-                randomDie();
-            }
-            else{
-                randomDisease();
-                System.out.println("test3");
+            else if (hasDisease()){
+                if (diseaseFatalityCheck()) {setNextState(false);}
             }
         }
-        /*
-        if (isAlive() == false) {
-        if (neighbours.size() == 3) {
-        setNextState(true);
-        }
-        }
-         */
     }
 }

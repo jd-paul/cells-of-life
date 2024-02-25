@@ -16,8 +16,8 @@ public class Placeholder extends Cell
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Placeholder(Field field, Location location, Color col) {
-        super(field, location, col);        
+    public Placeholder(Field field, Location location, Color col, boolean disease) {
+        super(field, location, col, false); // Placeholders will never have a disease.
     }
 
     /**
@@ -32,15 +32,9 @@ public class Placeholder extends Cell
         Random rand = Randomizer.getRandom();
 
         for (Cell cell : neighbours) {
-            if (cell instanceof Mycoplasma) {
-                adjMyco = true;
-            }
-            if (cell instanceof Yersinia) {
-                adjYer = true;
-            }
-            if (cell instanceof Bozium) {
-                adjBoz = true;
-            }
+            if (cell instanceof Mycoplasma) {adjMyco = true;}
+            if (cell instanceof Yersinia) {adjYer = true;}
+            if (cell instanceof Bozium) {adjBoz = true;}
         }
 
         if (!adjMyco && !adjBoz && !adjYer) {
@@ -64,7 +58,7 @@ public class Placeholder extends Cell
             }
         }
         else if (!adjMyco && !adjBoz && adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 setNextCell("yersinia");
             }
@@ -74,7 +68,7 @@ public class Placeholder extends Cell
          * Only two types of nearby cells
          */
         else if (adjMyco && adjBoz && !adjYer) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
+            if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(2);
                 if (n == 0) {setNextCell("mycoplasma");}
@@ -85,8 +79,8 @@ public class Placeholder extends Cell
             if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
-                if (n == 0 || n == 1) {setNextCell("bozium");}
-                else if (n == 2) {setNextCell("yersinia");}
+
+                setNextCell("yersinia");
             }
         }
         else if (adjMyco && !adjBoz && adjYer) {

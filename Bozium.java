@@ -13,16 +13,14 @@ import java.util.List;
  */
 public class Bozium extends Cell
 {
-    private Color yerColor = Color.rgb(225, 0, 0);
-    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Bozium(Field field, Location location, Color col) {
-        super(field, location, col);
+    public Bozium(Field field, Location location, Color col, boolean disease) {
+        super(field, location, col, disease);
     }
 
     /**
@@ -37,33 +35,22 @@ public class Bozium extends Cell
         /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
-                if(cell.hasDisease()){
-                    setNextDiseaseState(true);
-                    setColor(infectedColor);
-                }
-                if (cell instanceof Mycoplasma) {
-                    adjMyco = true;
-                }
-                if (cell instanceof Yersinia) {
-                    adjYer = true;
-                }
-                if (cell instanceof Bozium) {
-                    adjBoz = true;
-                }
+                if (cell instanceof Mycoplasma) {adjMyco = true;}
+                if (cell instanceof Yersinia) {adjYer = true;}
+                if (cell instanceof Bozium) {adjBoz = true;}
             }
-
-            if(adjMyco && !adjYer && neighbours.size() == 1){
+                        
+            if (adjYer & !adjMyco) {
+                setNextState(false);
+            }
+            else if (adjYer && adjMyco && ((neighbours.size() >= 1 && neighbours.size() <= 3) || neighbours.size() == 5)) {
                 setNextState(true);
             }
-            else if((adjMyco && adjYer) && ((neighbours.size() == 2 || neighbours.size() == 3))){
+            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 5)) {
                 setNextState(true);
             }
-            else if (neighbours.size() == 2 || neighbours.size() == 3){
+            else if (neighbours.size() >= 2 && neighbours.size() <= 4) {
                 setNextState(true);
-            }
-
-            if(hasDisease()){
-                randomDie();
             }
         }
     }
