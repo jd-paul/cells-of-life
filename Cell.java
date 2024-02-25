@@ -136,6 +136,13 @@ public abstract class Cell {
         return hasDisease;
     }
     
+    public void setNextDiseaseState(boolean value){
+        nextDisease = value;
+    }
+    
+    public void updateDiseaseState(){
+        hasDisease = nextDisease;
+    }
     public void setNextCell(String s) {
         nextCell = s;
     }

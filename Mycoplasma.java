@@ -35,8 +35,8 @@ public class Mycoplasma extends Cell {
 
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
-                if(cell.hasDisease()){
-                    setDiseaseState(true);
+                if(cell.hasDisease() == true){
+                    setNextDiseaseState(true);
                     setColor(infectedColor);
                 }
                 if (cell instanceof Mycoplasma) {

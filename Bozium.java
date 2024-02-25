@@ -38,7 +38,7 @@ public class Bozium extends Cell
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
                 if(cell.hasDisease()){
-                    setDiseaseState(true);
+                    setNextDiseaseState(true);
                     setColor(infectedColor);
                 }
                 if (cell instanceof Mycoplasma) {

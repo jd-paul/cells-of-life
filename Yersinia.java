@@ -28,7 +28,7 @@ public class Yersinia extends Cell
 
         // Check if the random number is 0 (1/10 chance) to die 
         if (randomNumber == YERSINIA_DISEASE_CHANCE) {
-            setDiseaseState(true);
+            setNextDiseaseState(true);
             setColor(infectedColor);
         }
         System.out.println("test");
@@ -68,7 +68,7 @@ public class Yersinia extends Cell
 
             for (Cell cell : neighbours) {
                 if(cell.hasDisease()){
-                    setDiseaseState(true);
+                    setNextDiseaseState(true);
                     setColor(infectedColor);
                     System.out.println("test2");
                 }
@@ -82,16 +82,18 @@ public class Yersinia extends Cell
                     adjBoz = true;
                 }
             }
-
+            
             if(adjMyco && !adjBoz && (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3)){
                 setNextState(true);
             }
             else if(!adjMyco && adjBoz && (neighbours.size() == 1 || neighbours.size() == 2 || neighbours.size() == 3)){
                 setNextState(true);
             }
+            
             else if (neighbours.size() == 2 || neighbours.size() == 3){
                 setNextState(true);
             }
+            
             if(hasDisease()){
                 randomDie();
             }
