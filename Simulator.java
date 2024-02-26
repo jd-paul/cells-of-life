@@ -14,15 +14,16 @@ import java.util.Random;
 
 public class Simulator {
 
-    private static final double MYCOPLASMA_ALIVE_PROB = 0.25;
-    private static final double BOZIUM_ALIVE_PROB = 0.25;
-    private static final double YERSINIA_ALIVE_PROB = 0.25;
-    
-    public static final Color mycoColor = Color.rgb(0, 255, 0);
+    private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
+    private static final double BOZIUM_ALIVE_PROB = 0.20;
+    private static final double YERSINIA_ALIVE_PROB = 0.10;
+
+    public static final Color mycoColor = Color.rgb(15, 255, 15);
     public static final Color bozColor = Color.rgb(0, 0, 255);
     public static final Color yerColor = Color.rgb(225, 0, 0);
+    public static final Color placeholderColor = Color.rgb(235, 235, 235);
 
-    private List<Cell> cells;
+    
     private Field field;
     private int generation;
 
@@ -39,7 +40,6 @@ public class Simulator {
      * @param width Width of the field. Must be greater than zero.
      */
     public Simulator(int depth, int width) {
-        cells = new ArrayList<>();
         field = new Field(depth, width);
         reset();
     }
@@ -49,15 +49,110 @@ public class Simulator {
      * Iterate over the whole field updating the state of each life form.
      */
     public void simOneGeneration() {
-        generation++;
-        for (Iterator<Cell> it = cells.iterator(); it.hasNext(); ) {
-            Cell cell = it.next();
-            cell.act();
+        Random rand = Randomizer.getRandom();
+
+        /**
+         * 1. Each cell will act();
+         */
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                if (!(field.getObjectAt(location) instanceof Mycoplasma)) {
+                    field.getObjectAt(location).act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                if (field.getObjectAt(location) instanceof Mycoplasma) {field.getObjectAt(location).act();}
+            }
         }
 
-        for (Cell cell : cells) {
-            cell.updateState();
+        /**
+         * 2. Each cell will updateState();
+         */
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                field.getObjectAt(location).updateState();
+                field.getObjectAt(location).updateDiseaseState();
+            }
         }
+
+        /**
+         * 3. Each cell is converted to the correct cell.
+         */
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell currentCell = field.getObjectAt(location);
+
+                /**
+                 * Placeholders are converted
+                 */
+                if (currentCell instanceof Placeholder) {
+                    if (currentCell.isAlive() == true) {
+                        if (currentCell.getNextCell().equals("mycoplasma")) {
+                            addCell(location, "mycoplasma", false);
+                        }
+                        else if (currentCell.getNextCell().equals("bozium")) {
+                            addCell(location, "bozium", false);
+                        }
+                        else if (currentCell.getNextCell().equals("yersinia")) {
+                            addCell(location, "yersinia", false);
+                        }
+                        else {
+                            addCell(location, "placeholder", false);
+                        }
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        addCell(location, "placeholder", false);
+                    }
+                }
+
+                /**
+                 * Mycoplasma cells are converted
+                 */
+                else if (currentCell instanceof Mycoplasma) {
+                    if (currentCell.isAlive() == true) {                        
+                        if (currentCell.hasDisease()) {addCell(location, "mycoplasma", true);}
+                        else {addCell(location, "mycoplasma", false);}
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        addCell(location, "placeholder", false);
+                    }
+                }
+
+                /**
+                 * Bozium cells are converted
+                 */
+                else if (currentCell instanceof Bozium) {
+                    if (currentCell.isAlive() == true) {
+                        if (currentCell.hasDisease()) {addCell(location, "bozium", true);}
+                        else {addCell(location, "bozium", false);}
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        addCell(location, "placeholder", false);
+                    }
+                }
+
+                /**
+                 * Yersinia cells are converted
+                 */
+                else if (currentCell instanceof Yersinia) {
+                    if (currentCell.isAlive() == true) {
+                        if (currentCell.hasDisease()) {addCell(location, "yersinia", true);}
+                        else {addCell(location, "yersinia", false);}
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        addCell(location, "placeholder", false);
+                    }
+                }
+            }
+        }
+        
+        generation++;
     }
 
     /**
@@ -65,8 +160,35 @@ public class Simulator {
      */
     public void reset() {
         generation = 0;
-        cells.clear();
         populate();
+    }
+
+    private void addCell(Location location, String cellType, boolean hasDisease) {
+        if (cellType.equals("mycoplasma")) {
+            Mycoplasma myco = new Mycoplasma(field, location, mycoColor, hasDisease);  
+            if (hasDisease) {myco.darkenColor(0.65);}
+            
+            field.place(myco, location);
+            myco.setAlive();
+        } else if (cellType.equals("bozium")) {
+            Bozium boz = new Bozium(field, location, bozColor, hasDisease);
+            if (hasDisease) {boz.darkenColor(0.65);}
+            
+            field.place(boz, location);
+            boz.setAlive();            
+        } else if (cellType.equals("yersinia")) {
+            Yersinia yer = new Yersinia(field, location, yerColor, hasDisease);
+            if (hasDisease) {yer.darkenColor(0.65);}
+            
+            field.place(yer, location);
+            yer.setAlive();
+        }
+        else if (cellType.equals("placeholder")) {
+            Placeholder placeholder = new Placeholder(field, location, placeholderColor, hasDisease);
+
+            field.place(placeholder, location);
+            placeholder.setDead();
+        }
     }
 
     /**
@@ -75,38 +197,35 @@ public class Simulator {
     private void populate() {
         Random rand = Randomizer.getRandom();
         field.clear();
+        
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 int n = rand.nextInt(3);
                 Location location = new Location(row, col);
                 
+                
                 if (n == 0) {
-                    Mycoplasma myco = new Mycoplasma(field, location, mycoColor);
                     if (rand.nextDouble() <= MYCOPLASMA_ALIVE_PROB) {
-                        cells.add(myco);
+                        addCell(location, "mycoplasma", false);
                     }
                     else {
-                        myco.setDead();
-                        cells.add(myco);
-    
+                        addCell(location, "placeholder", false);
                     }
-                } else if (n == 1) {
-                    Bozium boz = new Bozium(field, location, bozColor);
+                }
+                else if (n == 1) {
                     if (rand.nextDouble() <= BOZIUM_ALIVE_PROB) {
-                        cells.add(boz);
+                        addCell(location, "bozium", false);
                     }
                     else {
-                        boz.setDead();
-                        cells.add(boz);
+                        addCell(location, "placeholder", false);
                     }
-                } else if (n == 2) {
-                    Yersinia yer = new Yersinia(field, location, yerColor);
+                } 
+                else if (n == 2) {
                     if (rand.nextDouble() <= YERSINIA_ALIVE_PROB) {
-                        cells.add(yer);
+                        addCell(location, "yersinia", false);
                     }
                     else {
-                        yer.setDead();
-                        cells.add(yer);
+                        addCell(location, "placeholder", false);
                     }
                 }
             }

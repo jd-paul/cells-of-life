@@ -1,4 +1,3 @@
-
 import javafx.scene.paint.Color; 
 import java.util.List;
 
@@ -13,49 +12,50 @@ import java.util.List;
  */
 
 public class Mycoplasma extends Cell {
-    private Color yerColor = Color.rgb(225, 0, 0);
-    private Color infectedColor = Color.rgb(225, 234, 0);
     /**
      * Create a new Mycoplasma.
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Mycoplasma(Field field, Location location, Color col) {
-        super(field, location, col);        
+    public Mycoplasma(Field field, Location location, Color col, boolean disease) {
+        super(field, location, col, disease);
     }
 
     /**
-    * This is how the Mycoplasma decides if it's alive or not
-    */
+     * This is how the Mycoplasma decides if it's alive or not
+     */
     public void act() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         setNextState(false);
-        System.out.println("Acting");
-        System.out.println(neighbours);
-        if (isAlive() == true) {
-            if (neighbours.size() == 2 || neighbours.size() == 3) {
-                setNextState(true);
-                for(Cell cell: neighbours) {
-                    if(cell.getColor().equals(yerColor)){
-                    setDiseaseState(true);
-                    setColor(infectedColor);
-                    }
-                }
-                if(getDiseaseState()){
-                    randomDie();
-                }
-            }
-            else {
-                setNextState(false);
-            }
-                
-        }
-        if (isAlive() == false) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-            }
-        }
-    }
-    }
 
+        boolean adjMyco = false, adjYer = false, adjBoz = false;
+
+        if (isAlive() == true) {
+            for (Cell cell : neighbours) {
+                if (cell instanceof Mycoplasma) {adjMyco = true;}
+                if (cell instanceof Yersinia) {adjYer = true;}
+                if (cell instanceof Bozium) {adjBoz = true;}
+            }
+            
+            if ((neighbours.size() == 2 || neighbours.size() == 3)) {
+                setNextState(true);
+            }
+            
+            // Make sure nearby bozium doesn't die.
+            for (Cell innerCell : neighbours) {
+                if (innerCell instanceof Bozium) {innerCell.setNextState(true);}
+                for (Cell outerCell : neighbours) {
+                    if (outerCell instanceof Bozium) {outerCell.setNextState(true);}
+                }
+            }
+            
+            if (hasDisease()){
+                if (diseaseFatalityCheck()) {setNextState(false);}
+                for (Cell cell : neighbours) {
+                    if (catchDiseaseCheck()) {setNextDiseaseState(true);}
+                }
+            }
+        }
+    }
+}
