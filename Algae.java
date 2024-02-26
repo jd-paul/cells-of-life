@@ -2,23 +2,24 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
- * Simplest form of life.
- * Fun Fact: Mycoplasma are one of the simplest forms of life.  A type of
- * bacteria, they only have 500-1000 genes! For comparison, fruit flies have
- * about 14,000 genes.
+ * Fictional bacteria generated for this Life Simulation.
+ * Fun fact: This bacteria has a unique relationship with mycoplasma.
+ * By itself, bozium does not proliferate very well. However, when paired with
+ * a mycoplasma, it multiplies further.
+ * 
  *
- * @author David J. Barnes, Michael Kölling & Jeffery Raphael
- * @version 2022.01.06
+ * @author (your name)
+ * @version (a version number or a date)
  */
-
-public class Mycoplasma extends Cell {
+public class Algae extends Cell
+{
     /**
-     * Create a new Mycoplasma.
+     * Create a new A;gae.
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Mycoplasma(Field field, Location location, Color col, boolean disease) {
+    public Algae(Field field, Location location, Color col, boolean disease) {
         super(field, location, col, disease);
     }
 
@@ -31,28 +32,25 @@ public class Mycoplasma extends Cell {
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
+        /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
                 if (cell instanceof Mycoplasma) {adjMyco = true;}
                 if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
-            
-            if ((neighbours.size() == 2 || neighbours.size() == 3)) {
+                        
+            if (adjYer & !adjMyco) {
+                setNextState(false);
+            }
+            else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
                 setNextState(true);
             }
-            
-            // Make sure nearby bozium doesn't die. This checks two cells away.
-            for (Cell innerCell : neighbours) {
-                if (innerCell instanceof Bozium) {
-                    innerCell.setNextState(true);
-                }
-                List<Cell> innerCellNeighbours = innerCell.getNeighbours();
-                for (Cell outerCell : innerCellNeighbours) {
-                    if (outerCell instanceof Bozium) {
-                        outerCell.setNextState(true);
-                    }
-                }
+            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
+                setNextState(true);
+            }
+            else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
+                setNextState(true);
             }
             
             if (hasDisease()){
@@ -64,3 +62,4 @@ public class Mycoplasma extends Cell {
         }
     }
 }
+

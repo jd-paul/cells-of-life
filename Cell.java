@@ -35,9 +35,11 @@ public abstract class Cell {
      */
     public Cell(Field field, Location location, Color col, boolean disease) {
         alive = true;
+        nextAlive = false;
+        
         hasDisease = disease;
         nextDisease = false;
-        nextAlive = false;
+        
         this.field = field;
         setLocation(location);
         setColor(col);
@@ -76,6 +78,10 @@ public abstract class Cell {
      */
     public void setNextState(boolean value) {
         nextAlive = value;
+    }
+    
+    public void setNextDarken() {
+        darkenColor(0.6);
     }
 
     /**
@@ -166,6 +172,12 @@ public abstract class Cell {
 
     public String getNextCell() {
         return nextCell;
+    }
+    
+    public List<Cell> getNeighbours() {
+        List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
+        
+        return neighbours;
     }
 
     public void darkenColor(double factor) {

@@ -24,7 +24,7 @@ public class Placeholder extends Cell
      * This is how the Placeholder decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getField().getLivingNeighbours(getLocation()); // Note that this gives out a list of living cells. Placeholder cells are DEAD.
+        List<Cell> neighbours = getNeighbours();
         setNextState(false);
         setNextCell("placeholder");
 

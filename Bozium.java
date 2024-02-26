@@ -27,7 +27,7 @@ public class Bozium extends Cell
      * This is how the Mycoplasma decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
+        List<Cell> neighbours = getNeighbours();
         setNextState(false);
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
@@ -39,24 +39,33 @@ public class Bozium extends Cell
                 if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
-                        
-            if (adjYer & !adjMyco) {
-                setNextState(false);
-            }
-            else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
-                setNextState(true);
-            }
-            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
-                setNextState(true);
-            }
-            else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
-                setNextState(true);
-            }
-            
+
             if (hasDisease()){
+                if (neighbours.size() >= 1 && neighbours.size() <= 2) {
+                    setNextState(true);
+                }
+                
+                
                 if (diseaseFatalityCheck()) {setNextState(false);}
                 for (Cell cell : neighbours) {
                     if (catchDiseaseCheck()) {setNextDiseaseState(true);}
+                }
+            }
+            else {
+                if (adjYer & !adjMyco) {
+                    int n = rand.nextInt(3);
+                    if (n == 0 || n == 1) {setNextState(false);}
+                    else if (n == 2) {setNextState(true);}
+                    
+                }
+                else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
+                    setNextState(true);
+                }
+                else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
+                    setNextState(true);
+                }
+                else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
+                    setNextState(true);
                 }
             }
         }

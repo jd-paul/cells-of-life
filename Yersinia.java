@@ -23,7 +23,7 @@ public class Yersinia extends Cell
      * This is how the Yersinia decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
+        List<Cell> neighbours = getNeighbours();
         setNextState(false);
         setNextDiseaseState(hasDisease());
 
@@ -36,20 +36,34 @@ public class Yersinia extends Cell
                 if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
-            
+
             if (adjBoz) {
                 setNextState(true);
             }
             else if (neighbours.size() == 1 || neighbours.size() == 3) {
                 setNextState(true);
             }
+
             
             // Determine next disease
             if (!hasDisease()){
-                if (catchDiseaseCheck()) {setNextDiseaseState(true);}
+                if (catchDiseaseCheck()) {
+                    setNextDiseaseState(true);
+                }
             }
             else if (hasDisease()){
                 if (diseaseFatalityCheck()) {setNextState(false);}
+
+                // Spread disease
+                for (Cell innerCell : neighbours) {
+                    innerCell.setNextDiseaseState(true);
+                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                    for (Cell outerCell : innerCellNeighbours) {
+                        if (outerCell instanceof Bozium) {
+                            outerCell.setNextDiseaseState(true);
+                        }
+                    }
+                }
             }
         }
     }

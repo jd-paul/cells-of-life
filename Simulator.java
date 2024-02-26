@@ -17,7 +17,7 @@ public class Simulator {
     private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
     private static final double BOZIUM_ALIVE_PROB = 0.20;
     private static final double YERSINIA_ALIVE_PROB = 0.10;
-
+    
     public static final Color mycoColor = Color.rgb(15, 255, 15);
     public static final Color bozColor = Color.rgb(0, 0, 255);
     public static final Color yerColor = Color.rgb(225, 0, 0);
@@ -58,14 +58,18 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
                 if (!(field.getObjectAt(location) instanceof Mycoplasma)) {
-                    field.getObjectAt(location).act();
+                    Cell cell = field.getObjectAt(location);
+                    cell.act();
                 }
             }
         }
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
-                if (field.getObjectAt(location) instanceof Mycoplasma) {field.getObjectAt(location).act();}
+                if (field.getObjectAt(location) instanceof Mycoplasma) {
+                    Cell cell = field.getObjectAt(location);
+                    cell.act();
+                }
             }
         }
 
@@ -75,8 +79,9 @@ public class Simulator {
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
-                field.getObjectAt(location).updateState();
-                field.getObjectAt(location).updateDiseaseState();
+                Cell cell = field.getObjectAt(location);
+                cell.updateState();
+                cell.updateDiseaseState();
             }
         }
 
@@ -166,13 +171,13 @@ public class Simulator {
     private void addCell(Location location, String cellType, boolean hasDisease) {
         if (cellType.equals("mycoplasma")) {
             Mycoplasma myco = new Mycoplasma(field, location, mycoColor, hasDisease);  
-            if (hasDisease) {myco.darkenColor(0.65);}
+            if (hasDisease) {myco.darkenColor(0.45);}
             
             field.place(myco, location);
             myco.setAlive();
         } else if (cellType.equals("bozium")) {
             Bozium boz = new Bozium(field, location, bozColor, hasDisease);
-            if (hasDisease) {boz.darkenColor(0.65);}
+            if (hasDisease) {boz.darkenColor(0.25);}
             
             field.place(boz, location);
             boz.setAlive();            
