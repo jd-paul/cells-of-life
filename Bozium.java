@@ -60,9 +60,11 @@ public class Bozium extends Cell
                 }
                 else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
                     setNextState(true);
+                    setNextDiseaseState(false);
                 }
                 else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
                     setNextState(true);
+                    setNextDiseaseState(false);
                 }
                 else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
                     setNextState(true);

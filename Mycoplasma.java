@@ -46,11 +46,13 @@ public class Mycoplasma extends Cell {
             for (Cell innerCell : neighbours) {
                 if (innerCell instanceof Bozium) {
                     innerCell.setNextState(true);
+                    // setNextDiseaseState(false);
                 }
                 List<Cell> innerCellNeighbours = innerCell.getNeighbours();
                 for (Cell outerCell : innerCellNeighbours) {
                     if (outerCell instanceof Bozium) {
                         outerCell.setNextState(true);
+                        // setNextDiseaseState(false);
                     }
                 }
             }
@@ -58,7 +60,7 @@ public class Mycoplasma extends Cell {
             if (hasDisease()){
                 if (diseaseFatalityCheck()) {setNextState(false);}
                 for (Cell cell : neighbours) {
-                    if (catchDiseaseCheck()) {setNextDiseaseState(true);}
+                    if (catchDiseaseCheck()) {setNextDiseaseState(false);}
                 }
             }
         }

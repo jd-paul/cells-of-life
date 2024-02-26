@@ -57,8 +57,8 @@ public class Simulator {
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
-                if (!(field.getObjectAt(location) instanceof Mycoplasma)) {
-                    Cell cell = field.getObjectAt(location);
+                Cell cell = field.getObjectAt(location);
+                if (!(cell instanceof Mycoplasma)) {
                     cell.act();
                 }
             }
@@ -66,8 +66,8 @@ public class Simulator {
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
-                if (field.getObjectAt(location) instanceof Mycoplasma) {
-                    Cell cell = field.getObjectAt(location);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Mycoplasma) {
                     cell.act();
                 }
             }
