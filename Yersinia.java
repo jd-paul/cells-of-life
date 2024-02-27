@@ -44,7 +44,6 @@ public class Yersinia extends Cell
                 setNextState(true);
             }
 
-            
             // Determine next disease
             if (!hasDisease()){
                 if (catchDiseaseCheck()) {
@@ -54,13 +53,14 @@ public class Yersinia extends Cell
             else if (hasDisease()){
                 if (diseaseFatalityCheck()) {setNextState(false);}
 
-                // Spread disease
                 for (Cell innerCell : neighbours) {
-                    innerCell.setNextDiseaseState(true);
+                    if (innerCell instanceof Bozium || innerCell instanceof Yersinia) {
+                        if (catchDiseaseCheck()) {innerCell.setNextDiseaseState(true);}
+                    }
                     List<Cell> innerCellNeighbours = innerCell.getNeighbours();
                     for (Cell outerCell : innerCellNeighbours) {
-                        if (outerCell instanceof Bozium) {
-                            outerCell.setNextDiseaseState(true);
+                        if (innerCell instanceof Bozium || innerCell instanceof Yersinia) {
+                            if (catchDiseaseCheck()) {innerCell.setNextDiseaseState(true);}
                         }
                     }
                 }

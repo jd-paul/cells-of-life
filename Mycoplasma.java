@@ -28,6 +28,7 @@ public class Mycoplasma extends Cell {
     public void act() {
         List<Cell> neighbours = getNeighbours();
         setNextState(false);
+        setNextDiseaseState(false);
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
@@ -46,21 +47,14 @@ public class Mycoplasma extends Cell {
             for (Cell innerCell : neighbours) {
                 if (innerCell instanceof Bozium) {
                     innerCell.setNextState(true);
-                    // setNextDiseaseState(false);
+                    innerCell.setNextDiseaseState(false);
                 }
                 List<Cell> innerCellNeighbours = innerCell.getNeighbours();
                 for (Cell outerCell : innerCellNeighbours) {
                     if (outerCell instanceof Bozium) {
                         outerCell.setNextState(true);
-                        // setNextDiseaseState(false);
+                        outerCell.setNextDiseaseState(false);
                     }
-                }
-            }
-            
-            if (hasDisease()){
-                if (diseaseFatalityCheck()) {setNextState(false);}
-                for (Cell cell : neighbours) {
-                    if (catchDiseaseCheck()) {setNextDiseaseState(false);}
                 }
             }
         }

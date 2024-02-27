@@ -17,10 +17,12 @@ public class Simulator {
     private static final double MYCOPLASMA_ALIVE_PROB = 0.15;
     private static final double BOZIUM_ALIVE_PROB = 0.20;
     private static final double YERSINIA_ALIVE_PROB = 0.10;
+    private static final double SPAWNER_ALIVE_PROB = 0.01;
     
     public static final Color mycoColor = Color.rgb(15, 255, 15);
-    public static final Color bozColor = Color.rgb(0, 0, 255);
+    public static final Color bozColor = Color.rgb(0, 100, 255);
     public static final Color yerColor = Color.rgb(225, 0, 0);
+    public static final Color microbiotaColor = Color.rgb(128, 0, 128);
     public static final Color placeholderColor = Color.rgb(235, 235, 235);
 
     
@@ -58,7 +60,16 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
                 Cell cell = field.getObjectAt(location);
-                if (!(cell instanceof Mycoplasma)) {
+                if (cell instanceof Yersinia) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Bozium) {
                     cell.act();
                 }
             }
@@ -68,6 +79,15 @@ public class Simulator {
                 Location location = new Location(row, col);
                 Cell cell = field.getObjectAt(location);
                 if (cell instanceof Mycoplasma) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Placeholder) {
                     cell.act();
                 }
             }
@@ -99,13 +119,16 @@ public class Simulator {
                 if (currentCell instanceof Placeholder) {
                     if (currentCell.isAlive() == true) {
                         if (currentCell.getNextCell().equals("mycoplasma")) {
-                            addCell(location, "mycoplasma", false);
+                            if (currentCell.hasDisease()) {addCell(location, "mycoplasma", true);}
+                            else {addCell(location, "mycoplasma", false);}
                         }
                         else if (currentCell.getNextCell().equals("bozium")) {
-                            addCell(location, "bozium", false);
+                            if (currentCell.hasDisease()) {addCell(location, "bozium", true);}
+                            else {addCell(location, "bozium", false);}
                         }
                         else if (currentCell.getNextCell().equals("yersinia")) {
-                            addCell(location, "yersinia", false);
+                            if (currentCell.hasDisease()) {addCell(location, "yersinia", true);}
+                            else {addCell(location, "yersinia", false);}
                         }
                         else {
                             addCell(location, "placeholder", false);
@@ -177,13 +200,13 @@ public class Simulator {
             myco.setAlive();
         } else if (cellType.equals("bozium")) {
             Bozium boz = new Bozium(field, location, bozColor, hasDisease);
-            if (hasDisease) {boz.darkenColor(0.25);}
+            if (hasDisease) {boz.darkenColor(0.55);}
             
             field.place(boz, location);
             boz.setAlive();            
         } else if (cellType.equals("yersinia")) {
             Yersinia yer = new Yersinia(field, location, yerColor, hasDisease);
-            if (hasDisease) {yer.darkenColor(0.65);}
+            if (hasDisease) {yer.darkenColor(0.45);}
             
             field.place(yer, location);
             yer.setAlive();

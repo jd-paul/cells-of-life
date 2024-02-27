@@ -44,19 +44,27 @@ public class Bozium extends Cell
                 if (neighbours.size() >= 1 && neighbours.size() <= 2) {
                     setNextState(true);
                 }
-                
-                
                 if (diseaseFatalityCheck()) {setNextState(false);}
-                for (Cell cell : neighbours) {
-                    if (catchDiseaseCheck()) {setNextDiseaseState(true);}
+
+                // Disease spreading
+                for (Cell innerCell : neighbours) {
+                    if (innerCell instanceof Bozium) {
+                        innerCell.setNextDiseaseState(true);
+                    }
+                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                    for (Cell outerCell : innerCellNeighbours) {
+                        if (outerCell instanceof Bozium) {
+                            outerCell.setNextDiseaseState(false);
+                        }
+                    }
                 }
             }
             else {
                 if (adjYer & !adjMyco) {
-                    int n = rand.nextInt(3);
-                    if (n == 0 || n == 1) {setNextState(false);}
-                    else if (n == 2) {setNextState(true);}
-                    
+                    int n = rand.nextInt(8);
+                    if (n >= 1) {setNextState(true);}
+                    else if (n == 0) {setNextState(false);}
+
                 }
                 else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
                     setNextState(true);

@@ -28,13 +28,14 @@ public class Placeholder extends Cell
         setNextState(false);
         setNextCell("placeholder");
 
-        boolean adjMyco = false, adjYer = false, adjBoz = false;
+        boolean adjMyco = false, adjYer = false, adjBoz = false, nearbyDisease = false;
         Random rand = Randomizer.getRandom();
 
         for (Cell cell : neighbours) {
             if (cell instanceof Mycoplasma) {adjMyco = true;}
             if (cell instanceof Yersinia) {adjYer = true;}
             if (cell instanceof Bozium) {adjBoz = true;}
+            if (cell.hasDisease()) {nearbyDisease = true;}
         }
 
         if (!adjMyco && !adjBoz && !adjYer) {
@@ -54,12 +55,14 @@ public class Placeholder extends Cell
         else if (!adjMyco && adjBoz && !adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
+                setNextDiseaseState(true);
                 setNextCell("bozium");
             }
         }
         else if (!adjMyco && !adjBoz && adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
+                setNextDiseaseState(true);
                 setNextCell("yersinia");
             }
         }

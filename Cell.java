@@ -16,8 +16,6 @@ public abstract class Cell {
     private boolean hasDisease;
     private boolean nextDisease;
 
-    private boolean age;
-
     private Field field;
     private Location location;
     private Color color = Color.WHITE;
@@ -142,7 +140,7 @@ public abstract class Cell {
     protected boolean catchDiseaseCheck() {
         if (hasDisease) {return false;}
 
-        int n = rand.nextInt(3);
+        int n = rand.nextInt(10);
         
         if (n == 0) {
             return true;
