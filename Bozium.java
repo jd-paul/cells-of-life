@@ -29,6 +29,7 @@ public class Bozium extends Cell
     public void act() {
         List<Cell> neighbours = getNeighbours();
         setNextState(false);
+        setNextDiseaseState(false);
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
@@ -40,42 +41,28 @@ public class Bozium extends Cell
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
 
-            if (hasDisease()){
-                if (neighbours.size() >= 1 && neighbours.size() <= 2) {
-                    setNextState(true);
-                }
-                if (diseaseFatalityCheck()) {setNextState(false);}
-
-                // Disease spreading
-                for (Cell innerCell : neighbours) {
-                    if (innerCell instanceof Bozium) {
-                        innerCell.setNextDiseaseState(true);
-                    }
-                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
-                    for (Cell outerCell : innerCellNeighbours) {
-                        if (outerCell instanceof Bozium) {
-                            outerCell.setNextDiseaseState(false);
-                        }
-                    }
-                }
+            if (adjYer & !adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
+                int n = rand.nextInt(8);
+                if (n >= 1) {setNextState(true);}
+                else if (n == 0) {setNextState(false);}
             }
-            else {
-                if (adjYer & !adjMyco) {
-                    int n = rand.nextInt(8);
-                    if (n >= 1) {setNextState(true);}
-                    else if (n == 0) {setNextState(false);}
-
-                }
-                else if (adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
+            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
+                setNextState(true);
+            }
+            else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
+                setNextState(true);
+            }
+            
+            // Don't die if there is a nearby mycoplasma.
+            for (Cell innerCell : neighbours) {
+                if (innerCell instanceof Mycoplasma) {
                     setNextState(true);
-                    setNextDiseaseState(false);
                 }
-                else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
-                    setNextState(true);
-                    setNextDiseaseState(false);
-                }
-                else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
-                    setNextState(true);
+                List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                for (Cell outerCell : innerCellNeighbours) {
+                    if (outerCell instanceof Mycoplasma) {
+                        setNextState(true);
+                    }
                 }
             }
         }

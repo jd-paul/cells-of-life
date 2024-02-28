@@ -28,7 +28,6 @@ public class Mycoplasma extends Cell {
     public void act() {
         List<Cell> neighbours = getNeighbours();
         setNextState(false);
-        setNextDiseaseState(false);
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
@@ -38,25 +37,28 @@ public class Mycoplasma extends Cell {
                 if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
-            
+
             if ((neighbours.size() == 2 || neighbours.size() == 3)) {
                 setNextState(true);
             }
-            
-            // Make sure nearby bozium doesn't die. This checks two cells away.
-            for (Cell innerCell : neighbours) {
-                if (innerCell instanceof Bozium) {
-                    innerCell.setNextState(true);
-                    innerCell.setNextDiseaseState(false);
-                }
-                List<Cell> innerCellNeighbours = innerCell.getNeighbours();
-                for (Cell outerCell : innerCellNeighbours) {
-                    if (outerCell instanceof Bozium) {
-                        outerCell.setNextState(true);
-                        outerCell.setNextDiseaseState(false);
+
+            if (hasDisease()) {
+                if (diseaseFatalityCheck()) {setNextState(false);}
+                
+                for (Cell innerCell : neighbours) {
+                    if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
+                        innerCell.setNextDiseaseState(true);
+                    }
+                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                    for (Cell outerCell : innerCellNeighbours) {
+                        if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
+                            outerCell.setNextDiseaseState(true);
+                        }
                     }
                 }
             }
+            
+            if (adjBoz) {setNextDiseaseState(false);}
         }
     }
 }

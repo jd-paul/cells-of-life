@@ -2,10 +2,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
- * Fictional bacteria generated for this Life Simulation.
- * Fun fact: This bacteria has a unique relationship with mycoplasma.
- * By itself, bozium does not proliferate very well. However, when paired with
- * a mycoplasma, it multiplies further.
+ * Food cell
  * 
  *
  * @author (your name)
@@ -36,12 +33,13 @@ public class Microbiota extends Cell
         setNextState(false);
         setNextDiseaseState(false);
         
-        if (age >= MAX_AGE) {
+        if (++age >= MAX_AGE) {
             setNextState(false);
         }
         else {
             setNextState(true);
         }
+        
         /*
         for (Cell cell : neighbours) {
             if ()
@@ -52,6 +50,7 @@ public class Microbiota extends Cell
             }
         }
         */
+        
         
         
         age++;

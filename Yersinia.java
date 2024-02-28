@@ -40,6 +40,9 @@ public class Yersinia extends Cell
             if (adjBoz) {
                 setNextState(true);
             }
+            else if (adjMyco) {
+                setNextState(false);
+            }
             else if (neighbours.size() == 1 || neighbours.size() == 3) {
                 setNextState(true);
             }
@@ -53,14 +56,30 @@ public class Yersinia extends Cell
             else if (hasDisease()){
                 if (diseaseFatalityCheck()) {setNextState(false);}
 
+                // Spread disease to nearby Yersinia and Mycoplasma
                 for (Cell innerCell : neighbours) {
-                    if (innerCell instanceof Bozium || innerCell instanceof Yersinia) {
-                        if (catchDiseaseCheck()) {innerCell.setNextDiseaseState(true);}
+                    if (innerCell instanceof Yersinia) {
+                        innerCell.setNextDiseaseState(true);
+                    }
+                    else if (innerCell instanceof Mycoplasma) {
+                        int n = rand.nextInt(5);
+                        innerCell.setNextDiseaseState(true);
+                    }
+
+                    
+                    if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
+
                     }
                     List<Cell> innerCellNeighbours = innerCell.getNeighbours();
                     for (Cell outerCell : innerCellNeighbours) {
-                        if (innerCell instanceof Bozium || innerCell instanceof Yersinia) {
-                            if (catchDiseaseCheck()) {innerCell.setNextDiseaseState(true);}
+                        if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
+                            if (outerCell instanceof Yersinia) {
+                                outerCell.setNextDiseaseState(true);
+                            }
+                            else if (innerCell instanceof Mycoplasma) {
+                                int n = rand.nextInt(5);
+                                outerCell.setNextDiseaseState(true);
+                            }
                         }
                     }
                 }

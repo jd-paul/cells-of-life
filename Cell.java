@@ -129,7 +129,7 @@ public abstract class Cell {
     }
 
     protected boolean diseaseFatalityCheck() {
-        int randomNumber = rand.nextInt(15);
+        int randomNumber = rand.nextInt(300);
 
         if (randomNumber == 0) {
             return true;

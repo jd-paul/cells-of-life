@@ -50,20 +50,20 @@ public class Placeholder extends Cell
             if (neighbours.size() == 3) {
                 setNextState(true);
                 setNextCell("mycoplasma");
+                if (nearbyDisease) {setNextDiseaseState(true);}
             }
         }
         else if (!adjMyco && adjBoz && !adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
-                setNextDiseaseState(true);
                 setNextCell("bozium");
             }
         }
         else if (!adjMyco && !adjBoz && adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
-                setNextDiseaseState(true);
                 setNextCell("yersinia");
+                if (nearbyDisease) {setNextDiseaseState(true);}
             }
         }
 
