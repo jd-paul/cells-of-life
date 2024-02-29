@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color; 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
 
 /**
  * A graphical view of the simulation grid. The view displays a rectangle for
@@ -45,7 +47,9 @@ public class SimulatorView extends Application {
 
         stats = new FieldStats();
         fieldCanvas = new FieldCanvas(WIN_WIDTH - 50, WIN_HEIGHT - 50);
+        //fieldCanvas = new FieldCanvas(650,550);
         fieldCanvas.setScale(GRID_HEIGHT, GRID_WIDTH); 
+        //fieldCanvas.setScale(600,750); 
         simulator = new Simulator();
 
         Group root = new Group();
@@ -55,24 +59,35 @@ public class SimulatorView extends Application {
         population = new Label(POPULATION_PREFIX);
 
         BorderPane bPane = new BorderPane(); 
-        HBox infoPane = new HBox();
+        VBox infoPane = new VBox();
         HBox popPane = new HBox();
+        VBox populationPane = new VBox();
+        //VBox labelsVBox = new VBox();
+        //labelsVBox.getChildren().addAll(genLabel, infoLabel);
+        //infoPane.getChildren().add(labelsVBox);
 
-        infoPane.setSpacing(10);
+        infoPane.setSpacing(5);
         infoPane.getChildren().addAll(genLabel, infoLabel);       
         popPane.getChildren().addAll(population); 
-
+        popPane.setLayoutX(120);
+        popPane.setLayoutY(620);
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
-        bPane.setBottom(population);
-
+        //bPane.setBottom(population);
+        
+        //infoPane.setLayoutX(120);
+        //infoPane.setLayoutY(10);
+        
         root.getChildren().add(bPane);
+        root.getChildren().add(popPane);
+        //root.getChildren().add(infoPane);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
 
         stage.setScene(scene);          
-        stage.setTitle("Life Simulation");
+        stage.setTitle("Life Simulation:Cell of Survival");
         updateCanvas(simulator.getGeneration(), simulator.getField());
 
+        setInfoText("Simulation made by Joel and Paul.Adapted from code by David J.Barnes, Michael Kölling & Jeffery Raphael");
         stage.show();     
     }
 
@@ -98,14 +113,16 @@ public class SimulatorView extends Application {
 
                 stats.incrementCount(cell.getClass());
                 fieldCanvas.drawMark(col, row, cell.getColor());
-
-                // if (cell != null && cell.isAlive()) {
-                //   stats.incrementCount(cell.getClass());
-                // fieldCanvas.drawMark(col, row, cell.getColor());
-                //}
-                //else {
-                //   fieldCanvas.drawMark(col, row, EMPTY_COLOR);
-                //}
+                
+                /*
+                 if (cell != null && cell.isAlive()) {
+                   stats.incrementCount(cell.getClass());
+                 fieldCanvas.drawMark(col, row, cell.getColor());
+                }
+                else {
+                   fieldCanvas.drawMark(col, row, EMPTY_COLOR);
+                }
+                */
             }
         }
 
