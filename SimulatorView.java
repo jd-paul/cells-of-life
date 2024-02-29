@@ -67,14 +67,17 @@ public class SimulatorView extends Application {
         infoPane.setSpacing(10);
         infoPane.getChildren().addAll(genLabel, infoLabel);
         popPane.getChildren().addAll(population);
+        popPane.setLayoutX(120);
+        popPane.setLayoutY(635);
         infoPane.setPadding(new Insets(10, 10, 10, 10)); // 10 pixels padding on all sides
 
 
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
-        bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
+        //bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
 
         root.getChildren().add(bPane);
+        root.getChildren().add(popPane);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
 
         stage.setScene(scene);          
