@@ -23,7 +23,7 @@ public class Yersinia extends Cell
      * This is how the Yersinia decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getNeighbours();
+        List<Cell> neighbours = getLivingNeighbours();
         setNextState(false);
         setNextDiseaseState(hasDisease());
 
@@ -43,8 +43,11 @@ public class Yersinia extends Cell
             else if (adjMyco) {
                 setNextState(false);
             }
-            else if (neighbours.size() == 1 || neighbours.size() == 3) {
-                setNextState(true);
+                else if (!hasDisease() && (neighbours.size() >= 1 && neighbours.size() <= 5)) {
+                    setNextState(true);
+                }
+            else if (hasDisease() && (neighbours.size() == 2) || neighbours.size() == 4) {
+                
             }
 
             // Determine next disease
@@ -54,8 +57,6 @@ public class Yersinia extends Cell
                 }
             }
             else if (hasDisease()){
-                if (diseaseFatalityCheck()) {setNextState(false);}
-
                 // Spread disease to nearby Yersinia and Mycoplasma
                 for (Cell innerCell : neighbours) {
                     if (innerCell instanceof Yersinia) {
@@ -70,7 +71,7 @@ public class Yersinia extends Cell
                     if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
 
                     }
-                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                    List<Cell> innerCellNeighbours = innerCell.getLivingNeighbours();
                     for (Cell outerCell : innerCellNeighbours) {
                         if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
                             if (outerCell instanceof Yersinia) {
@@ -83,6 +84,9 @@ public class Yersinia extends Cell
                         }
                     }
                 }
+                
+                if (diseaseFatalityCheck()) {setNextState(false);}
+                if (healDiseaseCheck()) {setNextDiseaseState(false);}
             }
         }
     }

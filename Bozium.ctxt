@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.target=Bozium
-comment0.text=\r\n\ Fictional\ bacteria\ generated\ for\ this\ Life\ Simulation.\r\n\ Fun\ fact\:\ This\ bacteria\ has\ a\ unique\ relationship\ with\ mycoplasma.\r\n\ By\ itself,\ bozium\ does\ not\ proliferate\ very\ well.\ However,\ when\ paired\ with\r\n\ a\ mycoplasma,\ it\ multiplies\ further.\r\n\ \r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Fictional\ bacteria\ generated\ for\ this\ Life\ Simulation.\n\ Fun\ fact\:\ This\ bacteria\ has\ a\ unique\ relationship\ with\ mycoplasma.\n\ By\ itself,\ bozium\ does\ not\ proliferate\ very\ well.\ However,\ when\ paired\ with\n\ a\ mycoplasma,\ it\ multiplies\ further.\n\ \n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=field\ location\ col\ disease
 comment1.target=Bozium(Field,\ Location,\ javafx.scene.paint.Color,\ boolean)
-comment1.text=\r\n\ Create\ a\ new\ Mycoplasma.\r\n\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
+comment1.text=\n\ Create\ a\ new\ Mycoplasma.\n\n\ @param\ field\ The\ field\ currently\ occupied.\n\ @param\ location\ The\ location\ within\ the\ field.\n
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\r\n\ This\ is\ how\ the\ Mycoplasma\ decides\ if\ it's\ alive\ or\ not\r\n
+comment2.text=\n\ This\ is\ how\ the\ Mycoplasma\ decides\ if\ it's\ alive\ or\ not\n
 numComments=3

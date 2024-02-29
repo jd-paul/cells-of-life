@@ -26,16 +26,19 @@ public class Mycoplasma extends Cell {
      * This is how the Mycoplasma decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getNeighbours();
+        List<Cell> neighbours = getLivingNeighbours();
         setNextState(false);
 
-        boolean adjMyco = false, adjYer = false, adjBoz = false;
+        boolean adjBoz = false;
 
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
-                if (cell instanceof Mycoplasma) {adjMyco = true;}
-                if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
+                
+                List<Cell> outerCellNeighbours = cell.getLivingNeighbours();
+                for (Cell outerCell : outerCellNeighbours) {
+                    if (cell instanceof Bozium) {adjBoz = true;}
+                }
             }
 
             if ((neighbours.size() == 2 || neighbours.size() == 3)) {
@@ -43,19 +46,20 @@ public class Mycoplasma extends Cell {
             }
 
             if (hasDisease()) {
-                if (diseaseFatalityCheck()) {setNextState(false);}
-                
                 for (Cell innerCell : neighbours) {
                     if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
                         innerCell.setNextDiseaseState(true);
                     }
-                    List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                    List<Cell> innerCellNeighbours = innerCell.getLivingNeighbours();
                     for (Cell outerCell : innerCellNeighbours) {
                         if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
                             outerCell.setNextDiseaseState(true);
                         }
                     }
                 }
+                
+                if (diseaseFatalityCheck()) {setNextState(false);}
+                if (healDiseaseCheck()) {setNextDiseaseState(false);}
             }
             
             if (adjBoz) {setNextDiseaseState(false);}

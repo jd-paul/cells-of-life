@@ -154,6 +154,27 @@ public class Field {
       }
       return neighbours;
     }
+    
+    /**
+     * Get a shuffled list of dead neighbours
+     * @param location Get locations adjacent to this.
+     * @return A list of living neighbours
+     */
+    public List<Cell> getLivingAndDeadNeighbours(Location location) {
+      assert location != null : "Null location passed to adjacentLocations";
+      List<Cell> neighbours = new LinkedList<>();
+
+      if (location != null) {
+        List<Location> adjLocations = adjacentLocations(location);
+
+        for (Location loc : adjLocations) {
+          Cell cell = field[loc.getRow()][loc.getCol()];
+          neighbours.add(cell);
+        }
+        Collections.shuffle(neighbours, rand);
+      }
+      return neighbours;
+    }
 
     /**
      * Return the depth of the field.

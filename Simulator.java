@@ -17,12 +17,12 @@ public class Simulator {
     private static final double MYCOPLASMA_ALIVE_PROB = 0.10;
     private static final double BOZIUM_ALIVE_PROB = 0.20;
     private static final double YERSINIA_ALIVE_PROB = 0.10;
-    private static final double SPAWNER_ALIVE_PROB = 0.01;
+    private static final double MICROBIOTA_ALIVE_PROB = 0.005;
     
-    public static final Color mycoColor = Color.rgb(15, 255, 15);
+    public static final Color mycColor = Color.rgb(15, 255, 15);
     public static final Color bozColor = Color.rgb(0, 100, 255);
     public static final Color yerColor = Color.rgb(225, 0, 0);
-    public static final Color microbiotaColor = Color.rgb(128, 0, 128);
+    public static final Color micColor = Color.rgb(255, 0, 255);
     public static final Color placeholderColor = Color.rgb(235, 235, 235);
     
     
@@ -60,7 +60,16 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
                 Cell cell = field.getObjectAt(location);
-                if (!(cell instanceof Mycoplasma)) {
+                if (cell instanceof Yersinia) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Bozium) {
                     cell.act();
                 }
             }
@@ -70,6 +79,33 @@ public class Simulator {
                 Location location = new Location(row, col);
                 Cell cell = field.getObjectAt(location);
                 if (cell instanceof Mycoplasma) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Bozium) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Placeholder) {
+                    cell.act();
+                }
+            }
+        }
+        for (int row = 0; row < field.getDepth(); row++) {
+            for (int col = 0; col < field.getWidth(); col++) {
+                Location location = new Location(row, col);
+                Cell cell = field.getObjectAt(location);
+                if (cell instanceof Microbiota) {
                     cell.act();
                 }
             }
@@ -113,26 +149,18 @@ public class Simulator {
                             else {addCell(location, "yersinia", false);}
                         }
                         else {
-                            // Conversion to microbiota
-                            int microbiotaCellCount = getMicrobiotaCount();
-                            List <Cell> neighbours = currentCell.getNeighbours();
-                            
-                            int neighbourCount = neighbours.size();
-                            
-                            if (microbiotaCellCount <= 8) {
-                                if (currentCell.getNeighbours().size() == 8) {
-                                    addCell(location, "microbiota", false);
-                                }
-                                else {
-                                    addCell(location, "placeholder", false);
-                                }
-                            } else {
-                                addCell(location, "placeholder", false);
-                            }
+                            addCell(location, "placeholder", false);
                         }
                     }
                     else if (currentCell.isAlive() == false) {
-                        addCell(location, "placeholder", false);
+                        if (generation >= 100) {
+                            int n = rand.nextInt(256000);
+                            if (n == 0) {addCell(location, "microbiota", false);}
+                            else {addCell(location, "placeholder", false);}
+                        }
+                        else {
+                            addCell(location, "placeholder", false);
+                        }
                     }
                 }
 
@@ -174,6 +202,18 @@ public class Simulator {
                         addCell(location, "placeholder", false);
                     }
                 }
+                
+                /**
+                 * Microbiota cells are converted
+                 */
+                else if (currentCell instanceof Microbiota) {
+                    if (currentCell.isAlive() == true) {
+                        // Leave as is.
+                    }
+                    else if (currentCell.isAlive() == false) {
+                        addCell(location, "placeholder", false);
+                    }
+                }
             }
         }
         
@@ -190,14 +230,13 @@ public class Simulator {
 
     private void addCell(Location location, String cellType, boolean hasDisease) {
         if (cellType.equals("mycoplasma")) {
-            Mycoplasma myco = new Mycoplasma(field, location, mycoColor, hasDisease);  
+            Mycoplasma myco = new Mycoplasma(field, location, mycColor, hasDisease);  
             if (hasDisease) {myco.darkenColor(0.45);}
             
             field.place(myco, location);
             myco.setAlive();
         } else if (cellType.equals("bozium")) {
             Bozium boz = new Bozium(field, location, bozColor, hasDisease);
-            if (hasDisease) {boz.darkenColor(0.65);}
             
             field.place(boz, location);
             boz.setAlive();            
@@ -208,20 +247,16 @@ public class Simulator {
             field.place(yer, location);
             yer.setAlive();
         } else if (cellType.equals("microbiota")) {
-            Microbiota mic = new Microbiota(field, location, yerColor, hasDisease);
-            if (hasDisease) {mic.darkenColor(0.45);}
+            Microbiota mic = new Microbiota(field, location, micColor, hasDisease);
             
             field.place(mic, location);
             mic.setAlive();
-        }
-        else if (cellType.equals("placeholder")) {
+        } else if (cellType.equals("placeholder")) {
             Placeholder placeholder = new Placeholder(field, location, placeholderColor, hasDisease);
 
             field.place(placeholder, location);
             placeholder.setDead();
         }
-        
-        
     }
 
     /**
@@ -233,9 +268,8 @@ public class Simulator {
         
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                int n = rand.nextInt(3);
+                int n = rand.nextInt(4);
                 Location location = new Location(row, col);
-                
                 
                 if (n == 0) {
                     if (rand.nextDouble() <= MYCOPLASMA_ALIVE_PROB) {
@@ -252,10 +286,18 @@ public class Simulator {
                     else {
                         addCell(location, "placeholder", false);
                     }
-                } 
+                }
                 else if (n == 2) {
                     if (rand.nextDouble() <= YERSINIA_ALIVE_PROB) {
                         addCell(location, "yersinia", false);
+                    }
+                    else {
+                        addCell(location, "placeholder", false);
+                    }
+                }
+                else if (n == 3) {
+                    if (rand.nextDouble() <= MICROBIOTA_ALIVE_PROB) {
+                        addCell(location, "microbiota", false);
                     }
                     else {
                         addCell(location, "placeholder", false);
@@ -276,25 +318,6 @@ public class Simulator {
         catch (InterruptedException ie) {
             // wake up
         }
-    }
-    
-    /**
-     * Returns count of the number of living microbiota cells.
-     */
-    public int getMicrobiotaCount() {
-        int count = 0;
-        
-        reset();
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Cell cell = field.getObjectAt(row, col);
-
-                if (!(cell instanceof Microbiota)) {
-                    count++;
-                }
-            }
-        }
-        return count;
     }
 
     public Field getField() {
