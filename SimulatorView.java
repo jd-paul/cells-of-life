@@ -56,7 +56,7 @@ public class SimulatorView extends Application {
         genLabel = new Label(GENERATION_PREFIX);
         infoLabel = new Label("Simulation made by Joel and Paul. Adapted from code by \nDavid J. Barnes, Michael Kölling & Jeffery Raphael");
         population = new Label(POPULATION_PREFIX);
-        
+
         // Set to bold
         genLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
 
@@ -67,14 +67,16 @@ public class SimulatorView extends Application {
         infoPane.setSpacing(10);
         infoPane.getChildren().addAll(genLabel, infoLabel);
         popPane.getChildren().addAll(population);
+        popPane.setLayoutX(120);
+        popPane.setLayoutY(635);
         infoPane.setPadding(new Insets(10, 10, 10, 10)); // 10 pixels padding on all sides
-
 
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
-        bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
+        //bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
 
         root.getChildren().add(bPane);
+        root.getChildren().add(popPane);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
 
         stage.setScene(scene);          
@@ -132,7 +134,7 @@ public class SimulatorView extends Application {
 
                     for (int gen = 1; gen <= numGenerations; gen++) {
                         simulator.simOneGeneration();    
-                        simulator.delay(20); // Used to be 500
+                        simulator.delay(380); // Used to be 500
                         Platform.runLater(() -> {
                                     updateCanvas(simulator.getGeneration(), simulator.getField());
                             });

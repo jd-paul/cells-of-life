@@ -42,6 +42,6 @@ public class FieldCanvas extends Canvas {
     */
     public void drawMark(int x, int y, Color color) {
         gc.setFill(color);
-        gc.fillRect(x * xScale, y * yScale, xScale-1, yScale-1);
+        gc.fillRect((x+8) * xScale, (y-1) * yScale, xScale-1, yScale-1);
     }
 }

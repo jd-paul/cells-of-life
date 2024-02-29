@@ -140,7 +140,18 @@ public abstract class Cell {
     protected boolean catchDiseaseCheck() {
         if (hasDisease) {return false;}
 
-        int n = rand.nextInt(10);
+        int n = rand.nextInt(500);
+        
+        if (n == 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    protected boolean healDiseaseCheck() {
+        if (!hasDisease) {return true;}
+
+        int n = rand.nextInt(2);
         
         if (n == 0) {
             return true;
@@ -172,9 +183,13 @@ public abstract class Cell {
         return nextCell;
     }
     
-    public List<Cell> getNeighbours() {
+    public List<Cell> getLivingNeighbours() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
-        
+        return neighbours;
+    }
+    
+    public List<Cell> getLivingAndDeadNeighbours() {
+        List<Cell> neighbours = getField().getLivingAndDeadNeighbours(getLocation());
         return neighbours;
     }
 

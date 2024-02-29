@@ -27,7 +27,7 @@ public class Bozium extends Cell
      * This is how the Mycoplasma decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getNeighbours();
+        List<Cell> neighbours = getLivingNeighbours();
         setNextState(false);
         setNextDiseaseState(false);
 
@@ -42,11 +42,11 @@ public class Bozium extends Cell
             }
 
             if (adjYer & !adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {
-                int n = rand.nextInt(8);
+                int n = rand.nextInt(10);
                 if (n >= 1) {setNextState(true);}
                 else if (n == 0) {setNextState(false);}
             }
-            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 6)) {
+            else if (!adjYer && adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 8)) {
                 setNextState(true);
             }
             else if (neighbours.size() >= 1 && neighbours.size() <= 4) {
@@ -58,7 +58,7 @@ public class Bozium extends Cell
                 if (innerCell instanceof Mycoplasma) {
                     setNextState(true);
                 }
-                List<Cell> innerCellNeighbours = innerCell.getNeighbours();
+                List<Cell> innerCellNeighbours = innerCell.getLivingNeighbours();
                 for (Cell outerCell : innerCellNeighbours) {
                     if (outerCell instanceof Mycoplasma) {
                         setNextState(true);

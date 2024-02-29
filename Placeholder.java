@@ -24,7 +24,7 @@ public class Placeholder extends Cell
      * This is how the Placeholder decides if it's alive or not
      */
     public void act() {
-        List<Cell> neighbours = getNeighbours();
+        List<Cell> neighbours = getLivingNeighbours();
         setNextState(false);
         setNextCell("placeholder");
 
@@ -74,24 +74,41 @@ public class Placeholder extends Cell
             if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(2);
-                if (n == 0) {setNextCell("mycoplasma");}
+                if (n == 0) {
+                    setNextCell("mycoplasma");
+                }
                 else if (n == 1) {setNextCell("bozium");}
             }
         }
         else if (!adjMyco && adjBoz && adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
-                int n = rand.nextInt(3);
 
                 setNextCell("yersinia");
+                if (nearbyDisease) {
+                    if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                    else {setNextDiseaseState(true);}
+                }
             }
         }
         else if (adjMyco && !adjBoz && adjYer) {
             if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
-                if (n == 0 || n == 1) {setNextCell("mycoplasma");}
-                else if (n == 2) {setNextCell("yersinia");}
+                if (n == 0 || n == 1) {
+                    setNextCell("mycoplasma");
+                    if (nearbyDisease) {
+                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                        else {setNextDiseaseState(true);}
+                    }
+                }
+                else if (n == 2) {
+                    setNextCell("yersinia");
+                    if (nearbyDisease) {
+                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                        else {setNextDiseaseState(true);}
+                    }
+                }
             }
         }
 
@@ -102,9 +119,21 @@ public class Placeholder extends Cell
             if (neighbours.size() == 3) {
                 setNextState(true);
                 int n = rand.nextInt(3);
-                if (n == 0) {setNextCell("mycoplasma");}
+                if (n == 0) {
+                    setNextCell("mycoplasma");
+                    if (nearbyDisease) {
+                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                        else {setNextDiseaseState(true);}
+                    }
+                }
                 else if (n == 1) {setNextCell("bozium");}
-                else if (n == 2) {setNextCell("yersinia");}
+                else if (n == 2) {
+                    setNextCell("yersinia");
+                    if (nearbyDisease) {
+                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                        else {setNextDiseaseState(true);}
+                    }
+                }
             }
         }
     }
