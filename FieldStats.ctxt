@@ -6,6 +6,7 @@ comment1.target=FieldStats()
 comment1.text=\n\ Construct\ a\ FieldStats\ object.\ \ Set\ up\ a\ collection\ for\ counters\ for\n\ each\ type\ of\ cell\ that\ we\ might\ find\n
 comment2.params=
 comment2.target=java.util.HashMap\ saveCounters()
+comment2.text=\n\ This\ function\ is\ to\ make\ counters(hashmap)\ accesible\ in\ the\ SimulatorView\ class\n
 comment3.params=field
 comment3.target=java.lang.String\ getPopulationDetails(Field)
 comment3.text=\n\ Get\ details\ of\ what\ is\ in\ the\ field.\n\ @return\ A\ string\ describing\ what\ is\ in\ the\ field.\n

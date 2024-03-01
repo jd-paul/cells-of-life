@@ -116,7 +116,8 @@ public class Simulator {
                     }
                     else if (currentCell.isAlive() == false) {
                         if (generation >= 300) {
-                            int n = rand.nextInt(256000 - generation);
+                            int n = rand.nextInt(256000 - generation); //256000 is just a large number 
+                            //that we choose to reduce the chance of microbiota spawning
                             if (n == 0) {addCell(location, "microbiota", false);}
                             else {addCell(location, "placeholder", false);}
                         }
@@ -127,7 +128,7 @@ public class Simulator {
                 }
 
                 /**
-                 * Mycoplasma cells are converted
+                 * Mycoplasma cells are converted to placeholders if dead.
                  */
                 else if (currentCell instanceof Mycoplasma) {
                     if (currentCell.isAlive() == true) {                        
@@ -140,7 +141,7 @@ public class Simulator {
                 }
 
                 /**
-                 * Bozium cells are converted
+                 * Bozium cells are converted to placeholders if dead.
                  */
                 else if (currentCell instanceof Bozium) {
                     if (currentCell.isAlive() == true) {
@@ -153,7 +154,7 @@ public class Simulator {
                 }
 
                 /**
-                 * Yersinia cells are converted
+                 * Yersinia cells are converted to placeholders if dead.
                  */
                 else if (currentCell instanceof Yersinia) {
                     if (currentCell.isAlive() == true) {
@@ -166,7 +167,7 @@ public class Simulator {
                 }
                 
                 /**
-                 * Microbiota cells are converted
+                 * Microbiota cells are converted to placeholders if dead.
                  */
                 else if (currentCell instanceof Microbiota) {
                     if (currentCell.isAlive() == true) {
@@ -190,6 +191,14 @@ public class Simulator {
         populate();
     }
 
+    /**
+     * This method replaces cells on the board with the chosen cell. This is
+     * a support function for other methods to use.
+     * 
+     * @param location The location that the cell will be placed in
+     * @param cellType The type of cell that will be placed at the location
+     * @param hasDisease The status of the disease that the cell will have
+     */
     private void addCell(Location location, String cellType, boolean hasDisease) {
         if (cellType.equals("mycoplasma")) {
             Mycoplasma myco = new Mycoplasma(field, location, mycColor, hasDisease);  

@@ -37,6 +37,8 @@ public abstract class Cell {
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param color of the cells 
+     * @param current disease state
      */
     public Cell(Field field, Location location, Color col, boolean disease) {
         alive = true;

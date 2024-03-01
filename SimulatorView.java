@@ -81,35 +81,39 @@ public class SimulatorView extends Application {
         infoPane.setSpacing(10);
         infoPane.getChildren().addAll(genLabel, infoLabel);
         popPane.getChildren().addAll(population);
-        popPane.setLayoutX(40);
+        popPane.setLayoutX(40);  // reposition population pane
         popPane.setLayoutY(635);
         infoPane.setPadding(new Insets(10, 10, 10, 10)); // 10 pixels padding on all sides
-
+        //create view for barchart
         barChart.setLayoutX(50);
         barChart.setLayoutY(660);
         barChart.setPrefSize(550, 200);
-        barChart.setStyle("-fx-background-color: #EBEBEB; -fx-font-size: 14px;");
+        barChart.setStyle("-fx-background-color: #EBEBEB; -fx-font-size: 14px;");//set background colour of the barchart
         barChart.setLegendVisible(false);
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
-        //bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
 
         root.getChildren().add(bPane);
         root.getChildren().add(popPane);
         root.getChildren().add(barChart);
-        Scene scene = new Scene(root, WIN_WIDTH, 880); 
+        Scene scene = new Scene(root, WIN_WIDTH, 880); //readjust the defaut window to fit the barchart
 
         stage.setScene(scene);          
         stage.setTitle("Life Simulation: Cells of Survival");
         updateCanvas(simulator.getGeneration(), simulator.getField());
-        //updateCanvas(simulator.getGeneration(), simulator.getField());
         stage.show();
     }
-
+    
+    /**
+     * convert all cell's info into GraphData so it's ready to display as barChart later on
+     */
     public void addGraphData(int population, String name){
         series.getData().add(new XYChart.Data<>(population, "" + name));
     }
     
+    /**
+     * set different colour bar for different cell types
+     */
     public void setBarColour(){
     for (XYChart.Data<Number, String> data : series.getData()) {
             String colorStyle = "-fx-bar-fill: #FF8C00;";
@@ -125,15 +129,21 @@ public class SimulatorView extends Application {
             data.getNode().setStyle(colorStyle);
         }
     }
+    
+    /**
+     * setting up the bar chart 
+     * @param counters from the Counter class to keep track
+     * of the number of cells for each cell types.
+     */
     public void setBarChart(HashMap<Class, Counter> counters){
-        series.getData().clear();
+        series.getData().clear(); //clear everyround so it doesnt overlaps
         barChart.getData().clear();
         for (Class key : counters.keySet()) {
             Counter info = counters.get(key);
             if(!(info.getName()).equals("Placeholder"))
             addGraphData(info.getCount(),info.getName());
         }
-        barChart.getData().add(series);
+        barChart.getData().add(series); 
         setBarColour();
     }
 
@@ -148,6 +158,7 @@ public class SimulatorView extends Application {
      * Show the current status of the field.
      * @param generation The current generation.
      * @param field The field whose status is to be displayed.
+     * update barchart every generation 
      */
     public void updateCanvas(int generation, Field field) {
         HashMap<Class, Counter> counters = stats.saveCounters();

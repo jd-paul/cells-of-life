@@ -21,6 +21,8 @@ public class Microbiota extends Cell {
      *
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param color of the cells 
+     * @param current disease state
      */
     public Microbiota(Field field, Location location, Color col, boolean disease) {
         super(field, location, col, disease);

@@ -29,6 +29,9 @@ public class FieldStats {
         counters = new HashMap<>();
         countsValid = true;
     }
+    /**
+     * This function is to make counters(hashmap) accesible in the SimulatorView class
+     */
     public HashMap saveCounters(){
         return counters;
     }

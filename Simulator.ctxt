@@ -15,6 +15,7 @@ comment4.target=void\ reset()
 comment4.text=\n\ Reset\ the\ simulation\ to\ a\ starting\ position.\n
 comment5.params=location\ cellType\ hasDisease
 comment5.target=void\ addCell(Location,\ java.lang.String,\ boolean)
+comment5.text=\n\ This\ method\ replaces\ cells\ on\ the\ board\ with\ the\ chosen\ cell.\ This\ is\n\ a\ support\ function\ for\ other\ methods\ to\ use.\n\ \n\ @param\ location\ The\ location\ that\ the\ cell\ will\ be\ placed\ in\n\ @param\ cellType\ The\ type\ of\ cell\ that\ will\ be\ placed\ at\ the\ location\n\ @param\ hasDisease\ The\ status\ of\ the\ disease\ that\ the\ cell\ will\ have\n
 comment6.params=
 comment6.target=void\ populate()
 comment6.text=\n\ Randomly\ populate\ the\ field\ live/dead\ life\ forms\n
