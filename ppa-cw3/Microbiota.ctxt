@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Microbiota
+comment0.text=\r\n\ Food\ cell\r\n\ \r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=field\ location\ col\ disease
+comment1.target=Microbiota(Field,\ Location,\ javafx.scene.paint.Color,\ boolean)
+comment1.text=\r\n\ Create\ a\ new\ Spawner.\r\n\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ This\ is\ how\ the\ Mycoplasma\ decides\ if\ it's\ alive\ or\ not\r\n
+numComments=3
