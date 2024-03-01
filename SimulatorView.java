@@ -19,6 +19,13 @@ import javafx.geometry.Insets;
  *
  * @author David J. Barnes, Michael Kölling & Jeffery Raphael
  * @version 2024.02.03
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public class SimulatorView extends Application {
@@ -134,7 +141,7 @@ public class SimulatorView extends Application {
 
                     for (int gen = 1; gen <= numGenerations; gen++) {
                         simulator.simOneGeneration();    
-                        simulator.delay(380); // Used to be 500
+                        simulator.delay(25); // Used to be 500
                         Platform.runLater(() -> {
                                     updateCanvas(simulator.getGeneration(), simulator.getField());
                             });

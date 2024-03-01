@@ -7,6 +7,13 @@ import java.util.HashMap;
  *
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public class FieldStats {

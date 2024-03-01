@@ -7,6 +7,13 @@ import javafx.scene.paint.Color;
  *
  * @author Jeffery Raphael
  * @version 2024.02.03
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public class FieldCanvas extends Canvas {

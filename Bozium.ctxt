@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Bozium
-comment0.text=\n\ Fictional\ bacteria\ generated\ for\ this\ Life\ Simulation.\n\ Fun\ fact\:\ This\ bacteria\ has\ a\ unique\ relationship\ with\ mycoplasma.\n\ By\ itself,\ bozium\ does\ not\ proliferate\ very\ well.\ However,\ when\ paired\ with\n\ a\ mycoplasma,\ it\ multiplies\ further.\n\ \n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ Bozium\ is\ a\ blue\ cell\ that\ will\ populate\ very\ easily.\ It\ has\ a\ unique\ symbiotic\ relationship\ with\n\ Mycoplasma.\ When\ paired\ with\ a\ mycoplasma,\ it\ will\ never\ die.\n\n\ Added\ code\ by\:\n\ @author\ John\ Paul\ D.\ San\ Diego\n\ @k-number\ 21190412\n\ \n\ @author\ Jia\ Cheng\ Lim\n\ @k-number\ 23102614\n
 comment1.params=field\ location\ col\ disease
 comment1.target=Bozium(Field,\ Location,\ javafx.scene.paint.Color,\ boolean)
 comment1.text=\n\ Create\ a\ new\ Mycoplasma.\n\n\ @param\ field\ The\ field\ currently\ occupied.\n\ @param\ location\ The\ location\ within\ the\ field.\n

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Field
-comment0.text=\n\ Represent\ a\ rectangular\ grid\ of\ field\ positions.\n\ Each\ position\ stores\ a\ single\ cell\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2022.01.06\n
+comment0.text=\n\ Represent\ a\ rectangular\ grid\ of\ field\ positions.\n\ Each\ position\ stores\ a\ single\ cell\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2022.01.06\n\ \n\ Added\ code\ by\:\n\ @author\ John\ Paul\ D.\ San\ Diego\n\ @k-number\ 21190412\n\ \n\ @author\ Jia\ Cheng\ Lim\n\ @k-number\ 23102614\n
 comment1.params=depth\ width
 comment1.target=Field(int,\ int)
 comment1.text=\n\ Represent\ a\ field\ of\ the\ given\ dimensions.\n\ @param\ depth\ The\ depth\ of\ the\ field.\n\ @param\ width\ The\ width\ of\ the\ field.\n

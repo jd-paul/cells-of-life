@@ -3,10 +3,15 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Write a description of class Placeholder_Cell here.
+ * Placeholder cell is a 'dead' cell. All living cells that have turned dead are converted into this
+ * new cell. This cell conversion is dealt through the simulator.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 public class Placeholder extends Cell
 {
@@ -21,7 +26,8 @@ public class Placeholder extends Cell
     }
 
     /**
-     * This is how the Placeholder decides if it's alive or not
+     * This is how the Placeholder decides if it's alive or not. It ignores the presence of Microbiota cells when
+     * considering adjacency edge cases.
      */
     public void act() {
         List<Cell> neighbours = getLivingNeighbours();

@@ -2,10 +2,15 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
- * Write a description of class Yersinia here.
+ * Yersinia cell is a red cell that will kill nearby Bozium. It is also the only cell that can randomly
+ * contract the virus.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 public class Yersinia extends Cell
 {
@@ -27,13 +32,12 @@ public class Yersinia extends Cell
         setNextState(false);
         setNextDiseaseState(hasDisease());
 
-        boolean adjMyco = false, adjYer = false, adjBoz = false;
+        boolean adjMyco = false, adjBoz = false;
 
         if (isAlive() == true) {
             // Determine next alive
             for (Cell cell : neighbours) {
                 if (cell instanceof Mycoplasma) {adjMyco = true;}
-                if (cell instanceof Yersinia) {adjYer = true;}
                 if (cell instanceof Bozium) {adjBoz = true;}
             }
 

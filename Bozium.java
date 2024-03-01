@@ -2,14 +2,15 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
- * Fictional bacteria generated for this Life Simulation.
- * Fun fact: This bacteria has a unique relationship with mycoplasma.
- * By itself, bozium does not proliferate very well. However, when paired with
- * a mycoplasma, it multiplies further.
- * 
+ * Bozium is a blue cell that will populate very easily. It has a unique symbiotic relationship with
+ * Mycoplasma. When paired with a mycoplasma, it will never die.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 public class Bozium extends Cell
 {
@@ -33,12 +34,10 @@ public class Bozium extends Cell
 
         boolean adjMyco = false, adjYer = false, adjBoz = false;
 
-        /* IMPLEMENT WITH NEW RULES! */
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
                 if (cell instanceof Mycoplasma) {adjMyco = true;}
                 if (cell instanceof Yersinia) {adjYer = true;}
-                if (cell instanceof Bozium) {adjBoz = true;}
             }
 
             if (adjYer & !adjMyco && (neighbours.size() >= 1 && neighbours.size() <= 4)) {

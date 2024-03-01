@@ -6,7 +6,14 @@ import java.util.List;
  * A class representing the shared characteristics of all forms of life
  *
  * @author David J. Barnes, Michael Kölling & Jeffery Raphael
- * @version 2022.01.06
+ * @version 2024.02.03
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public abstract class Cell { 
@@ -127,7 +134,11 @@ public abstract class Cell {
     protected Field getField() {
         return field;
     }
-
+    
+    /**
+     * Check if the cell should die due to the infection.
+     * @return true if the cell should die, false otherwise.
+     */
     protected boolean diseaseFatalityCheck() {
         int randomNumber = rand.nextInt(300);
 
@@ -136,7 +147,11 @@ public abstract class Cell {
         }
         return false;
     }
-
+    
+    /**
+     * Check if the cell should contract the disease.
+     * @return true if the cell should contract it, false otherwise.
+     */
     protected boolean catchDiseaseCheck() {
         if (hasDisease) {return false;}
 
@@ -148,6 +163,10 @@ public abstract class Cell {
         return false;
     }
     
+    /**
+     * Check if the cell should heal from the disease.
+     * @return true if the cell should heal from it, false otherwise.
+     */
     protected boolean healDiseaseCheck() {
         if (!hasDisease) {return true;}
 
@@ -159,14 +178,18 @@ public abstract class Cell {
         return false;
     }
 
-    public void setDiseaseState(boolean value) {
-        hasDisease = value;
-    }
-
+    /**
+     * Return the cell's disease status.
+     * @return The cell's disease status.
+     */
     public boolean hasDisease() {
         return hasDisease;
     }
 
+    /**
+     * Set the disease status of the cell.
+     * @param value true if the cell should have the disease, false otherwise.
+     */
     public void setNextDiseaseState(boolean value) {
         nextDisease = value;
     }
@@ -209,5 +232,4 @@ public abstract class Cell {
         Color darkenedColor = Color.color(r, g, b);
         setColor(darkenedColor);
     }
-
 }

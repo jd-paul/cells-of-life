@@ -2,10 +2,16 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 /**
- * Write a description of class Microbiota here.
+ * Microbiota is a pink cell that will spawn bozium and mycoplasma nearby.
+ * It is the only cell affected by age, and has a very rare spawn rate. It is immune to disease.
+ * It will die of old age.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 public class Microbiota extends Cell {
     int age;
@@ -36,20 +42,20 @@ public class Microbiota extends Cell {
         if (isAlive() == true) {
             for (Cell cell : neighbours) {
                 if (cell instanceof Placeholder) {
-                    int n = rand.nextInt(3);
+                    int n = rand.nextInt(7);
                     
                     if (n == 0) {
                         cell.setNextState(true);
                         cell.setNextDiseaseState(false);
-                        cell.setNextCell("mycoplasma");
-                    } else if (n == 1) {
-                        cell.setNextState(true);
-                        cell.setNextDiseaseState(false);
-                        cell.setNextCell("mycoplasma");
-                    } else if (n == 2) {
-                        cell.setNextState(true);
-                        cell.setNextDiseaseState(false);
                         cell.setNextCell("bozium");
+                    } else if (n == 1) {
+                        cell.setNextState(false);
+                        cell.setNextDiseaseState(false);
+                        cell.setNextCell("placeholder");
+                    } else {
+                        cell.setNextState(true);
+                        cell.setNextDiseaseState(false);
+                        cell.setNextCell("mycoplasma");
                     }
                 }
             }

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=SimulatorView
-comment0.text=\n\ A\ graphical\ view\ of\ the\ simulation\ grid.\ The\ view\ displays\ a\ rectangle\ for\n\ each\ location.\ Colors\ for\ each\ type\ of\ life\ form\ can\ be\ defined\ using\ the\n\ setColor\ method.\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2024.02.03\n
+comment0.text=\n\ A\ graphical\ view\ of\ the\ simulation\ grid.\ The\ view\ displays\ a\ rectangle\ for\n\ each\ location.\ Colors\ for\ each\ type\ of\ life\ form\ can\ be\ defined\ using\ the\n\ setColor\ method.\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2024.02.03\n\ \n\ Added\ code\ by\:\n\ @author\ John\ Paul\ D.\ San\ Diego\n\ @k-number\ 21190412\n\ \n\ @author\ Jia\ Cheng\ Lim\n\ @k-number\ 23102614\n
 comment1.params=stage
 comment1.target=void\ start(javafx.stage.Stage)
 comment1.text=\n\ Create\ a\ view\ of\ the\ given\ width\ and\ height.\n\ @param\ height\ The\ simulation's\ height.\n\ @param\ width\ \ The\ simulation's\ width.\n

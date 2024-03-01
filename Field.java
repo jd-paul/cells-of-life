@@ -9,6 +9,13 @@ import java.util.Random;
  *
  * @author David J. Barnes, Michael Kölling & Jeffery Raphael
  * @version 2022.01.06
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public class Field {

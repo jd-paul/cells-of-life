@@ -6,10 +6,19 @@ import java.util.Random;
 
 /**
  * A Life (Game of Life) simulator, first described by British mathematician
- * John Horton Conway in 1970.
+ * John Horton Conway in 1970. Conway's set of rules is used as inspiration
+ * for this game, which now uses multiple new cell types:
+ * Mycoplasma, Bozium, Yersinia, Microbiota, and Placeholder cell.
  *
  * @author David J. Barnes, Michael Kölling & Jeffery Raphael
  * @version 2024.02.03
+ * 
+ * Added code by:
+ * @author John Paul D. San Diego
+ * @k-number 21190412
+ * 
+ * @author Jia Cheng Lim
+ * @k-number 23102614
  */
 
 public class Simulator {
@@ -24,7 +33,6 @@ public class Simulator {
     public static final Color yerColor = Color.rgb(225, 0, 0);
     public static final Color micColor = Color.rgb(255, 0, 255);
     public static final Color placeholderColor = Color.rgb(235, 235, 235);
-    
     
     private Field field;
     private int generation;
@@ -319,11 +327,19 @@ public class Simulator {
             // wake up
         }
     }
-
+    
+    /**
+     * Get field
+     * @return field.
+     */
     public Field getField() {
         return field;
     }
-
+    
+    /**
+     * Get field
+     * @return field.
+     */
     public int getGeneration() {
         return generation;
     }

@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Simulator
-comment0.text=\n\ A\ Life\ (Game\ of\ Life)\ simulator,\ first\ described\ by\ British\ mathematician\n\ John\ Horton\ Conway\ in\ 1970.\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2024.02.03\n
+comment0.text=\n\ A\ Life\ (Game\ of\ Life)\ simulator,\ first\ described\ by\ British\ mathematician\n\ John\ Horton\ Conway\ in\ 1970.\ Conway's\ set\ of\ rules\ is\ used\ as\ inspiration\n\ for\ this\ game,\ which\ now\ uses\ multiple\ new\ cell\ types\:\n\ Mycoplasma,\ Bozium,\ Yersinia,\ Microbiota,\ and\ Placeholder\ cell.\n\n\ @author\ David\ J.\ Barnes,\ Michael\ K\u00F6lling\ &\ Jeffery\ Raphael\n\ @version\ 2024.02.03\n\ \n\ Added\ code\ by\:\n\ @author\ John\ Paul\ D.\ San\ Diego\n\ @k-number\ 21190412\n\ \n\ @author\ Jia\ Cheng\ Lim\n\ @k-number\ 23102614\n
 comment1.params=
 comment1.target=Simulator()
 comment1.text=\n\ Construct\ a\ simulation\ field\ with\ default\ size.\n
@@ -23,6 +23,8 @@ comment7.target=void\ delay(int)
 comment7.text=\n\ Pause\ for\ a\ given\ time.\n\ @param\ millisec\ \ The\ time\ to\ pause\ for,\ in\ milliseconds\n
 comment8.params=
 comment8.target=Field\ getField()
+comment8.text=\n\ Get\ field\n\ @return\ field.\n
 comment9.params=
 comment9.target=int\ getGeneration()
+comment9.text=\n\ Get\ field\n\ @return\ field.\n
 numComments=10
