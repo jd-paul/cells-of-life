@@ -62,7 +62,8 @@ public class Simulator {
         Random rand = Randomizer.getRandom();
 
         /**
-         * 1. Each cell will act();
+         * 1. Each cell will act(); This order is important as act() from certain cells
+         * are prioritized over other cell types.
          */
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
@@ -161,8 +162,8 @@ public class Simulator {
                         }
                     }
                     else if (currentCell.isAlive() == false) {
-                        if (generation >= 100) {
-                            int n = rand.nextInt(256000);
+                        if (generation >= 500) {
+                            int n = rand.nextInt(256000 - generation);
                             if (n == 0) {addCell(location, "microbiota", false);}
                             else {addCell(location, "placeholder", false);}
                         }

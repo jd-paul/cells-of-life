@@ -84,10 +84,6 @@ public abstract class Cell {
     public void setNextState(boolean value) {
         nextAlive = value;
     }
-    
-    public void setNextDarken() {
-        darkenColor(0.6);
-    }
 
     /**
      * Changes the state of the cell.
@@ -194,27 +190,56 @@ public abstract class Cell {
         nextDisease = value;
     }
 
+    /**
+     * Changes the state of the disease.
+     */
     public void updateDiseaseState(){
         hasDisease = nextDisease;
     }
 
+    /**
+     * Sets the next cell type this cell should turn into. This method is currently only used by
+     * placeholder cell and microbiota.
+     * 
+     * @param String the type of cell it should turn into.
+     */
     public void setNextCell(String s) {
         nextCell = s;
     }
 
+    /**
+     * Gets the next cell type this cell should turn into.
+     */
     public String getNextCell() {
         return nextCell;
     }
     
+    /**
+     * Gets the living adjacent neighbours.
+     * 
+     * @return List<Cell> of living neighbours.
+     */
     public List<Cell> getLivingNeighbours() {
         List<Cell> neighbours = getField().getLivingNeighbours(getLocation());
         return neighbours;
     }
     
+    /**
+     * Gets both living and dead adjacent neighbours.
+     * 
+     * @return List<Cell> of neighbours. This is primarily used by Microbiota to turn placeholder
+     * cells into living cells.
+     */
     public List<Cell> getLivingAndDeadNeighbours() {
         List<Cell> neighbours = getField().getLivingAndDeadNeighbours(getLocation());
         return neighbours;
     }
+    
+    /**
+     * Darkens the color of the cell by a specified factor.
+     * 
+     * @param factor.
+     */
 
     public void darkenColor(double factor) {
         Color originalColor = this.color;
