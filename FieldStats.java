@@ -29,7 +29,9 @@ public class FieldStats {
         counters = new HashMap<>();
         countsValid = true;
     }
-
+    public HashMap saveCounters(){
+        return counters;
+    }
     /**
      * Get details of what is in the field.
      * @return A string describing what is in the field.

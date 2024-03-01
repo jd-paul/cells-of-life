@@ -11,7 +11,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.geometry.Insets;
-
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import java.util.HashMap;
 /**
  * A graphical view of the simulation grid. The view displays a rectangle for
  * each location. Colors for each type of life form can be defined using the
@@ -45,7 +49,10 @@ public class SimulatorView extends Application {
     private FieldCanvas fieldCanvas;
     private FieldStats stats;
     private Simulator simulator;
-
+    XYChart.Series<Number, String> series = new XYChart.Series<>();
+    CategoryAxis xAxis = new CategoryAxis();
+    NumberAxis yAxis = new NumberAxis();
+    BarChart<Number, String> barChart = new BarChart<>(yAxis, xAxis);
     /**
      * Create a view of the given width and height.
      * @param height The simulation's height.
@@ -74,23 +81,43 @@ public class SimulatorView extends Application {
         infoPane.setSpacing(10);
         infoPane.getChildren().addAll(genLabel, infoLabel);
         popPane.getChildren().addAll(population);
-        popPane.setLayoutX(120);
+        popPane.setLayoutX(40);
         popPane.setLayoutY(635);
         infoPane.setPadding(new Insets(10, 10, 10, 10)); // 10 pixels padding on all sides
 
+        barChart.setLayoutX(40);
+        barChart.setLayoutY(650);
+        barChart.setPrefSize(500, 200);
+        
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
         //bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
 
         root.getChildren().add(bPane);
         root.getChildren().add(popPane);
-        Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT); 
+        root.getChildren().add(barChart);
+        Scene scene = new Scene(root, WIN_WIDTH, 880); 
 
         stage.setScene(scene);          
         stage.setTitle("Life Simulation: Cells of Survival");
         updateCanvas(simulator.getGeneration(), simulator.getField());
-
+        //updateCanvas(simulator.getGeneration(), simulator.getField());
         stage.show();
+    }
+
+    public void addGraphData(int population, String name){
+        series.getData().add(new XYChart.Data<>(population, "" + name));
+    }
+
+    public void setBarChart(HashMap<Class, Counter> counters){
+        series.getData().clear();
+        barChart.getData().clear();
+        for (Class key : counters.keySet()) {
+            Counter info = counters.get(key);
+            if(!(info.getName()).equals("Placeholder"))
+            addGraphData(info.getCount(),info.getName());
+        }
+        barChart.getData().add(series);
     }
 
     /**
@@ -106,6 +133,7 @@ public class SimulatorView extends Application {
      * @param field The field whose status is to be displayed.
      */
     public void updateCanvas(int generation, Field field) {
+        HashMap<Class, Counter> counters = stats.saveCounters();
         genLabel.setText(GENERATION_PREFIX + generation);
         stats.reset();
 
@@ -115,9 +143,10 @@ public class SimulatorView extends Application {
 
                 stats.incrementCount(cell.getClass());
                 fieldCanvas.drawMark(col, row, cell.getColor());
-            }
+                }
         }
-
+        
+        setBarChart(counters);
         stats.countFinished();
         population.setText(POPULATION_PREFIX + stats.getPopulationDetails(field));
     }
@@ -139,13 +168,13 @@ public class SimulatorView extends Application {
     public void simulate(int numGenerations) {
         new Thread(() -> {
 
-                    for (int gen = 1; gen <= numGenerations; gen++) {
-                        simulator.simOneGeneration();    
-                        simulator.delay(25); // Used to be 500
-                        Platform.runLater(() -> {
-                                    updateCanvas(simulator.getGeneration(), simulator.getField());
-                            });
-                    }
+                for (int gen = 1; gen <= numGenerations; gen++) {
+                    simulator.simOneGeneration();    
+                    simulator.delay(750); // Used to be 500
+                    Platform.runLater(() -> {
+                            updateCanvas(simulator.getGeneration(), simulator.getField());
+                        });
+                }
 
             }).start();
     }
