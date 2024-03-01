@@ -39,28 +39,6 @@ public class Microbiota extends Cell {
             setNextState(true);
         }
         
-        if (isAlive() == true) {
-            for (Cell cell : neighbours) {
-                if (cell instanceof Placeholder) {
-                    int n = rand.nextInt(7);
-                    
-                    if (n == 0) {
-                        cell.setNextState(true);
-                        cell.setNextDiseaseState(false);
-                        cell.setNextCell("bozium");
-                    } else if (n == 1) {
-                        cell.setNextState(false);
-                        cell.setNextDiseaseState(false);
-                        cell.setNextCell("placeholder");
-                    } else {
-                        cell.setNextState(true);
-                        cell.setNextDiseaseState(false);
-                        cell.setNextCell("mycoplasma");
-                    }
-                }
-            }
-        }
-        
         age++;
     }
 }

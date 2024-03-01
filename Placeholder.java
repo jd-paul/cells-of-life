@@ -34,112 +34,133 @@ public class Placeholder extends Cell
         setNextState(false);
         setNextCell("placeholder");
 
-        boolean adjMyco = false, adjYer = false, adjBoz = false, nearbyDisease = false;
+        boolean adjMyco = false, adjYer = false, adjBoz = false, adjMic = false, nearbyDisease = false;
         Random rand = Randomizer.getRandom();
 
         for (Cell cell : neighbours) {
             if (cell instanceof Mycoplasma) {adjMyco = true;}
             if (cell instanceof Yersinia) {adjYer = true;}
             if (cell instanceof Bozium) {adjBoz = true;}
+            if (cell instanceof Microbiota) {adjMic = true;}
             if (cell.hasDisease()) {nearbyDisease = true;}
         }
 
-        if (!adjMyco && !adjBoz && !adjYer) {
-            setNextState(false);
-            setNextCell("placeholder");
-        }
+        if(!adjMic) {
+            if (!adjMyco && !adjBoz && !adjYer) {
+                setNextState(false);
+                setNextCell("placeholder");
+            }
 
-        /**
-         * Only one type of nearby cell
-         */
-        else if (adjMyco && !adjBoz && !adjYer) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-                setNextCell("mycoplasma");
-                if (nearbyDisease) {setNextDiseaseState(true);}
+            /**
+             * Only one type of nearby cell
+             */
+            else if (adjMyco && !adjBoz && !adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    setNextCell("mycoplasma");
+                    if (nearbyDisease) {setNextDiseaseState(true);}
+                }
+            }
+            else if (!adjMyco && adjBoz && !adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    setNextCell("bozium");
+                }
+            }
+            else if (!adjMyco && !adjBoz && adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    setNextCell("yersinia");
+                    if (nearbyDisease) {setNextDiseaseState(true);}
+                }
+            }
+
+            /**
+             * Only two types of nearby cells
+             */
+            else if (adjMyco && adjBoz && !adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    int n = rand.nextInt(2);
+                    if (n == 0) {
+                        setNextCell("mycoplasma");
+                    }
+                    else if (n == 1) {setNextCell("bozium");}
+                }
+            }
+            else if (!adjMyco && adjBoz && adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+
+                    setNextCell("yersinia");
+                    if (nearbyDisease) {
+                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                        else {setNextDiseaseState(true);}
+                    }
+                }
+            }
+            else if (adjMyco && !adjBoz && adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    int n = rand.nextInt(3);
+                    if (n == 0 || n == 1) {
+                        setNextCell("mycoplasma");
+                        if (nearbyDisease) {
+                            if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                            else {setNextDiseaseState(true);}
+                        }
+                    }
+                    else if (n == 2) {
+                        setNextCell("yersinia");
+                        if (nearbyDisease) {
+                            if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                            else {setNextDiseaseState(true);}
+                        }
+                    }
+                }
+            }
+
+            /**
+             * Only three types of nearby cells
+             */
+            else if (adjMyco && adjBoz && adjYer) {
+                if (neighbours.size() == 3) {
+                    setNextState(true);
+                    int n = rand.nextInt(3);
+                    if (n == 0) {
+                        setNextCell("mycoplasma");
+                        if (nearbyDisease) {
+                            if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                            else {setNextDiseaseState(true);}
+                        }
+                    }
+                    else if (n == 1) {setNextCell("bozium");}
+                    else if (n == 2) {
+                        setNextCell("yersinia");
+                        if (nearbyDisease) {
+                            if (healDiseaseCheck()) {setNextDiseaseState(false);}
+                            else {setNextDiseaseState(true);}
+                        }
+                    }
+                }
             }
         }
-        else if (!adjMyco && adjBoz && !adjYer) {
-            if (neighbours.size() == 3) {
+        else {
+            /**
+             * Randomly choose the new cell type to turn into next turn.
+             */
+
+            int n = rand.nextInt(8);
+            if (n == 0) {
                 setNextState(true);
                 setNextCell("bozium");
-            }
-        }
-        else if (!adjMyco && !adjBoz && adjYer) {
-            if (neighbours.size() == 3) {
+            } else if (n == 1) {
+                setNextState(false);
+                setNextCell("placeholder");
+            } else {
                 setNextState(true);
-                setNextCell("yersinia");
-                if (nearbyDisease) {setNextDiseaseState(true);}
-            }
-        }
-
-        /**
-         * Only two types of nearby cells
-         */
-        else if (adjMyco && adjBoz && !adjYer) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-                int n = rand.nextInt(2);
-                if (n == 0) {
-                    setNextCell("mycoplasma");
-                }
-                else if (n == 1) {setNextCell("bozium");}
-            }
-        }
-        else if (!adjMyco && adjBoz && adjYer) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-
-                setNextCell("yersinia");
-                if (nearbyDisease) {
-                    if (healDiseaseCheck()) {setNextDiseaseState(false);}
-                    else {setNextDiseaseState(true);}
-                }
-            }
-        }
-        else if (adjMyco && !adjBoz && adjYer) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-                int n = rand.nextInt(3);
-                if (n == 0 || n == 1) {
-                    setNextCell("mycoplasma");
-                    if (nearbyDisease) {
-                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
-                        else {setNextDiseaseState(true);}
-                    }
-                }
-                else if (n == 2) {
-                    setNextCell("yersinia");
-                    if (nearbyDisease) {
-                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
-                        else {setNextDiseaseState(true);}
-                    }
-                }
-            }
-        }
-
-        /**
-         * Only three types of nearby cells
-         */
-        else if (adjMyco && adjBoz && adjYer) {
-            if (neighbours.size() == 3) {
-                setNextState(true);
-                int n = rand.nextInt(3);
-                if (n == 0) {
-                    setNextCell("mycoplasma");
-                    if (nearbyDisease) {
-                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
-                        else {setNextDiseaseState(true);}
-                    }
-                }
-                else if (n == 1) {setNextCell("bozium");}
-                else if (n == 2) {
-                    setNextCell("yersinia");
-                    if (nearbyDisease) {
-                        if (healDiseaseCheck()) {setNextDiseaseState(false);}
-                        else {setNextDiseaseState(true);}
-                    }
-                }
+                setNextDiseaseState(false);
+                setNextCell("mycoplasma");
             }
         }
     }

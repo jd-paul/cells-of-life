@@ -39,36 +39,28 @@ public class Mycoplasma extends Cell {
         boolean adjBoz = false;
 
         if (isAlive() == true) {
+            // Check for adjacencies and nearby disease. If there is a nearby Bozium, do not contract disease.
+            // Check if cell will gain disease from adjacent cells.
             for (Cell cell : neighbours) {
                 if (cell instanceof Bozium) {adjBoz = true;}
-                
+                else if (cell.hasDisease()) {setNextDiseaseState(true);}
+
                 List<Cell> outerCellNeighbours = cell.getLivingNeighbours();
                 for (Cell outerCell : outerCellNeighbours) {
-                    if (cell instanceof Bozium) {adjBoz = true;}
+                    if (outerCell instanceof Bozium) {adjBoz = true;}
+                    else if (outerCell.hasDisease()) {setNextDiseaseState(true);}
                 }
             }
 
             if ((neighbours.size() == 2 || neighbours.size() == 3)) {
                 setNextState(true);
             }
-
+            
             if (hasDisease()) {
-                for (Cell innerCell : neighbours) {
-                    if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
-                        innerCell.setNextDiseaseState(true);
-                    }
-                    List<Cell> innerCellNeighbours = innerCell.getLivingNeighbours();
-                    for (Cell outerCell : innerCellNeighbours) {
-                        if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
-                            outerCell.setNextDiseaseState(true);
-                        }
-                    }
-                }
-                
                 if (diseaseFatalityCheck()) {setNextState(false);}
                 if (healDiseaseCheck()) {setNextDiseaseState(false);}
             }
-            
+
             if (adjBoz) {setNextDiseaseState(false);}
         }
     }

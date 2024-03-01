@@ -69,54 +69,7 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
                 Cell cell = field.getObjectAt(location);
-                if (cell instanceof Yersinia) {
-                    cell.act();
-                }
-            }
-        }
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Cell cell = field.getObjectAt(location);
-                if (cell instanceof Bozium) {
-                    cell.act();
-                }
-            }
-        }
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Cell cell = field.getObjectAt(location);
-                if (cell instanceof Mycoplasma) {
-                    cell.act();
-                }
-            }
-        }
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Cell cell = field.getObjectAt(location);
-                if (cell instanceof Bozium) {
-                    cell.act();
-                }
-            }
-        }
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Cell cell = field.getObjectAt(location);
-                if (cell instanceof Placeholder) {
-                    cell.act();
-                }
-            }
-        }
-        for (int row = 0; row < field.getDepth(); row++) {
-            for (int col = 0; col < field.getWidth(); col++) {
-                Location location = new Location(row, col);
-                Cell cell = field.getObjectAt(location);
-                if (cell instanceof Microbiota) {
-                    cell.act();
-                }
+                cell.act();
             }
         }
 
@@ -162,7 +115,7 @@ public class Simulator {
                         }
                     }
                     else if (currentCell.isAlive() == false) {
-                        if (generation >= 500) {
+                        if (generation >= 300) {
                             int n = rand.nextInt(256000 - generation);
                             if (n == 0) {addCell(location, "microbiota", false);}
                             else {addCell(location, "placeholder", false);}

@@ -47,11 +47,11 @@ public class Yersinia extends Cell
             else if (adjMyco) {
                 setNextState(false);
             }
-                else if (!hasDisease() && (neighbours.size() >= 1 && neighbours.size() <= 5)) {
-                    setNextState(true);
-                }
+            else if (!hasDisease() && (neighbours.size() >= 1 && neighbours.size() <= 5)) {
+                setNextState(true);
+            }
             else if (hasDisease() && (neighbours.size() == 2) || neighbours.size() == 4) {
-                
+
             }
 
             // Determine next disease
@@ -59,36 +59,28 @@ public class Yersinia extends Cell
                 if (catchDiseaseCheck()) {
                     setNextDiseaseState(true);
                 }
-            }
-            else if (hasDisease()){
-                // Spread disease to nearby Yersinia and Mycoplasma
-                for (Cell innerCell : neighbours) {
-                    if (innerCell instanceof Yersinia) {
-                        innerCell.setNextDiseaseState(true);
-                    }
-                    else if (innerCell instanceof Mycoplasma) {
+                // Copy paste
+
+                for (Cell cell : neighbours) {
+                    if (cell.hasDisease()) {
                         int n = rand.nextInt(5);
-                        innerCell.setNextDiseaseState(true);
+                        if (n == 0) {
+                            setNextDiseaseState(true);
+                        }
                     }
 
-                    
-                    if (innerCell instanceof Mycoplasma || innerCell instanceof Yersinia) {
-
-                    }
-                    List<Cell> innerCellNeighbours = innerCell.getLivingNeighbours();
-                    for (Cell outerCell : innerCellNeighbours) {
-                        if (outerCell instanceof Mycoplasma || outerCell instanceof Yersinia) {
-                            if (outerCell instanceof Yersinia) {
-                                outerCell.setNextDiseaseState(true);
-                            }
-                            else if (innerCell instanceof Mycoplasma) {
-                                int n = rand.nextInt(5);
-                                outerCell.setNextDiseaseState(true);
+                    List<Cell> outerCellNeighbours = cell.getLivingNeighbours();
+                    for (Cell outerCell : outerCellNeighbours) {
+                        if (outerCell.hasDisease()) {
+                            int n = rand.nextInt(5);
+                            if (n == 0) {
+                                setNextDiseaseState(true);
                             }
                         }
                     }
                 }
-                
+            }
+            else if (hasDisease()){
                 if (diseaseFatalityCheck()) {setNextState(false);}
                 if (healDiseaseCheck()) {setNextDiseaseState(false);}
             }
