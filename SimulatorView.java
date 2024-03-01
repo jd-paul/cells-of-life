@@ -85,10 +85,11 @@ public class SimulatorView extends Application {
         popPane.setLayoutY(635);
         infoPane.setPadding(new Insets(10, 10, 10, 10)); // 10 pixels padding on all sides
 
-        barChart.setLayoutX(40);
-        barChart.setLayoutY(650);
-        barChart.setPrefSize(500, 200);
-        
+        barChart.setLayoutX(50);
+        barChart.setLayoutY(660);
+        barChart.setPrefSize(550, 200);
+        barChart.setStyle("-fx-background-color: #EBEBEB; -fx-font-size: 14px;");
+        barChart.setLegendVisible(false);
         bPane.setTop(infoPane);
         bPane.setCenter(fieldCanvas);
         //bPane.setBottom(popPane); // Add popPane to the bottom of the BorderPane
@@ -108,7 +109,22 @@ public class SimulatorView extends Application {
     public void addGraphData(int population, String name){
         series.getData().add(new XYChart.Data<>(population, "" + name));
     }
-
+    
+    public void setBarColour(){
+    for (XYChart.Data<Number, String> data : series.getData()) {
+            String colorStyle = "-fx-bar-fill: #FF8C00;";
+            if((data.getYValue().toString()).equals("Yersinia"))
+            {colorStyle = "-fx-bar-fill: #FF0000;";}
+            else if((data.getYValue().toString()).equals("Mycoplasma"))
+            {colorStyle = "-fx-bar-fill: #00FF00;";}
+            else if((data.getYValue().toString()).equals("Bozium"))
+            {colorStyle = "-fx-bar-fill: #0000FF;";}
+            else if((data.getYValue().toString()).equals("Microbiota"))
+            {colorStyle = "-fx-bar-fill: #FF00FF;";}
+            //String colorStyle = getColorStyle(); // Define your own color logic
+            data.getNode().setStyle(colorStyle);
+        }
+    }
     public void setBarChart(HashMap<Class, Counter> counters){
         series.getData().clear();
         barChart.getData().clear();
@@ -118,6 +134,7 @@ public class SimulatorView extends Application {
             addGraphData(info.getCount(),info.getName());
         }
         barChart.getData().add(series);
+        setBarColour();
     }
 
     /**
